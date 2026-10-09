@@ -275,3 +275,4 @@
 @media(max-width:800px){.periods-page .trend-card{padding:19px 18px 15px}.history-chart{margin-top:21px}.history-visual{grid-template-columns:39px minmax(0,1fr);gap:6px;height:145px}.history-x{margin-left:45px}.history-pair{font-size:23px;gap:7px}.history-delta{font-size:12px;padding:5px 8px}.trend-card .period-card-head h2{font-size:22px}.trend-card .period-card-head .trend-unit{font-size:12px}.history-tip{max-width:min(175px,calc(100vw - 36px))}.history-tip-value{font-size:13px}}
 @media(max-width:800px){.period-controls{display:block;margin:20px 0 15px}.period-asof{display:block;text-align:right;margin-top:7px;font-size:11px}}
 @media(max-width:380px){.history-comparison{align-items:flex-start;flex-direction:column;gap:8px}.history-pair{font-size:25px}.history-delta{align-self:flex-end}}
+@media(max-width:800px){.today-page .hero-art{display:none}}
