@@ -50,6 +50,13 @@
 .live-sleep-state{color:#60716e;font-size:14px;line-height:1.5}
 .live-sleep-source{font-size:12px;color:#758187;margin:2px 0 0}
 .live-sleep-note{font-size:12px;color:#78848a;line-height:1.5;margin:22px 0}
+.live-wellness-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0 23px}
+.live-wellness-metric{min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:22px;background:#f7f8f4;border:1px solid #e7ebe5;border-radius:18px}
+.live-wellness-label{font-size:13px;font-weight:700;color:#526965;line-height:1.4}
+.live-wellness-value{font:600 clamp(31px,4vw,48px)/1.15 'Playfair Display',Georgia,serif;color:#102036;letter-spacing:-.035em;margin:13px 0 4px;overflow-wrap:anywhere}
+.live-wellness-unit{font-size:12px;color:#778681;line-height:1.4}
+#live-wellness-status{min-height:22px;margin:20px 0 0}
+@media(max-width:520px){.live-wellness-grid{grid-template-columns:1fr 1fr;gap:9px}.live-wellness-metric{padding:15px;min-height:145px}.live-wellness-label{font-size:12px}.live-wellness-value{font-size:clamp(24px,7vw,34px)}.live-wellness-unit{font-size:12px}}
 @media(max-width:800px){.live-sleep-page .content-shell{padding:35px 18px 115px}.live-sleep-hero h1{font-size:46px}.live-sleep-card{padding:22px;margin-top:24px}.bottom-nav .nav-item{min-width:0;flex:1;padding:3px 5px}}
 .periods-page .period-hero{min-height:132px}
 .pin-page{min-height:100svh;display:grid;place-items:center;padding:24px}.pin-card{width:min(100%,420px);background:#fffdf9;border:1px solid #e9e5df;border-radius:26px;box-shadow:0 18px 60px #1b332014;padding:38px}.pin-card h1{font-size:48px;margin:10px 0 12px}.pin-card>p{color:#60716e;line-height:1.5}.pin-card form{display:grid;gap:12px;margin-top:30px}.pin-card label{font-size:14px;font-weight:700}.pin-card input{width:100%;border:1px solid #cbd3cb;border-radius:14px;background:white;color:#102036;font:700 26px Manrope,sans-serif;letter-spacing:.28em;padding:12px 16px;min-height:58px}.pin-card input:focus{outline:2px solid #57886e;outline-offset:2px}.pin-card button{border:0;border-radius:14px;min-height:52px;background:#3f7762;color:white;font-weight:700}.pin-card button:disabled{opacity:.5}.pin-message{min-height:24px;color:#9c4e46;font-size:14px;line-height:1.5;margin:16px 0 0}.pin-loading{color:#60716e}
