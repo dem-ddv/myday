@@ -1,5 +1,5 @@
-import { today, numberText } from './data.js';
-import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js';
+import { today, numberText } from './data.js?v=1dc4bd0bd20b';
+import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js?v=1dc4bd0bd20b';
 
 const dateText=(key,options={day:'numeric',month:'short'})=>new Intl.DateTimeFormat('ru-RU',{timeZone:'UTC',...options}).format(new Date(`${key}T12:00:00Z`));
 const number=value=>value===null?'—':numberText(Math.round(value));
