@@ -1,5 +1,5 @@
-import { today, numberText } from './data.js?v=1dc4bd0bd20b';
-import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js?v=1dc4bd0bd20b';
+import { today, numberText } from './data.js?v=f0cd85731739';
+import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js?v=f0cd85731739';
 
 const dateText=(key,options={day:'numeric',month:'short'})=>new Intl.DateTimeFormat('ru-RU',{timeZone:'UTC',...options}).format(new Date(`${key}T12:00:00Z`));
 const number=value=>value===null?'—':numberText(Math.round(value));
@@ -126,15 +126,17 @@ function macroDetails(first,last){
   return `<details class="period-macros"><summary>Белки · жиры · углеводы</summary><div class="period-macro-head">Среднее по дням с записями</div>${rows.join('')}</details>`;
 }
 function card(buckets,mode,metric,symbol,tone,icon){
-  const first=mode==='year'?(buckets.find(bucket=>bucketValue(bucket,metric)!==null)??buckets[0]):buckets[0],last=buckets.at(-1);
+  const firstDataIndex=mode==='year'?buckets.findIndex(bucket=>bucketValue(bucket,metric)!==null):0;
+  const first=mode==='year'?buckets[Math.min(firstDataIndex<0?0:firstDataIndex,buckets.length-2)]:buckets[0],last=buckets.at(-1);
   const oldValue=bucketValue(first,metric),newValue=bucketValue(last,metric);
+  const firstCount=first.keys.filter(key=>metric==='weight'?Number.isFinite(record(key)?.weight?.kg):metric==='nutrition'?Number.isFinite(record(key)?.nutrition?.calories):Number.isFinite(record(key)?.[metric])).length;
   const oldMeasure=metric==='weight'?lastWeight(first.keys):null;
   const newMeasure=metric==='weight'?lastWeight(last.keys):null;
   const note=metric==='nutrition'?' · по внесённым записям':'';
-  const change=newValue===null&&mode==='day'&&metric==='nutrition'?'Нет записи':newValue===null&&mode==='day'&&metric==='weight'?'Нет замера':difference(metric,oldValue,newValue);
+  const change=mode==='year'&&metric!=='weight'&&firstCount<7?'Недостаточно данных':newValue===null&&mode==='day'&&metric==='nutrition'?'Нет записи':newValue===null&&mode==='day'&&metric==='weight'?'Нет замера':difference(metric,oldValue,newValue);
   const pair=`<div class="history-comparison" role="group" aria-label="${bucketLabel(first,mode)} — ${bucketLabel(last,mode)}"><div class="history-pair"><span class="history-old">${valueText(metric,oldValue)}${oldMeasure?`<small>${shortDate(oldMeasure.date)}${mode==='year'?` ${oldMeasure.date.slice(0,4)}`:''}</small>`:''}</span><span class="history-arrow" aria-hidden="true">→</span><span class="history-new">${valueText(metric,newValue)}${newMeasure?`<small>${shortDate(newMeasure.date)}${mode==='year'?` ${newMeasure.date.slice(0,4)}`:''}</small>`:''}</span></div><strong class="history-delta">${change}</strong></div>`;
   const completed=metric==='nutrition'?last.keys.filter(key=>record(key)?.nutrition).length:0;
-  const caveat=metric==='nutrition'&&mode!=='day'&&completed>0&&completed<3?`<p class="trend-caveat">Среднее пока по ${completed===1?'одному дню':'двум дням'} с записями.</p>`:'';
+  const caveat=mode==='year'&&metric!=='weight'&&firstCount>0&&firstCount<7?`<p class="trend-caveat">${first.start.slice(0,4)}: только ${firstCount} ${firstCount===1?'день':firstCount<5?'дня':'дней'} с записями.</p>`:metric==='nutrition'&&mode!=='day'&&completed>0&&completed<3?`<p class="trend-caveat">Среднее пока по ${completed===1?'одному дню':'двум дням'} с записями.</p>`:'';
   return `<article class="period-card trend-card ${metric}"><div class="period-card-head"><span class="icon-orb ${tone}">${icon(symbol,22)}</span><div><h2>${metricName[metric]}</h2><span class="trend-unit">${unitName[metric]}${note}</span></div></div>${chart(buckets,mode,metric)}${pair}${caveat}${metric==='nutrition'?macroDetails(first,last):''}</article>`;
 }
 export function renderPeriods(state,icon){
