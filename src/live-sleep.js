@@ -2,6 +2,7 @@ import { apiBase, onMyDay } from './api-config.js';
 
 const dateText = iso => new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`)).replace(/\sг\.$/, '');
 const moscowDate = () => { const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).map(p => [p.type, p.value])); return `${parts.year}-${parts.month}-${parts.day}`; };
+const previousDate = iso => new Date(Date.parse(`${iso}T00:00:00Z`) - 86400000).toISOString().slice(0, 10);
 let currentRequest;
 
 const metrics = [
@@ -12,8 +13,8 @@ const metrics = [
 ];
 
 export function liveWellnessPage() {
-  const date = moscowDate();
-  return `<main class="page live-sleep-page"><div class="content-shell"><section class="live-sleep-hero"><div class="eyebrow">ЛИЧНЫЕ ДАННЫЕ</div><h1>Мои данные</h1><p>Показатели Garmin за выбранный день</p></section><section class="live-sleep-card"><label for="sleep-date">Дата записи</label><input id="sleep-date" type="date" max="${date}" value="${date}" /><p id="live-wellness-status" class="live-sleep-state" role="status" aria-live="polite">Загружаем записи…</p><div class="live-wellness-grid" aria-busy="true">${metrics.map(metric => `<div class="live-wellness-metric" data-metric="${metric.key}"><span class="live-wellness-label">${metric.label}</span><strong class="live-wellness-value">—</strong><span class="live-wellness-unit">${metric.unit}</span></div>`).join('')}</div><p class="live-sleep-source">Источник: Garmin через Intervals.icu. Пропуск означает, что запись не получена.</p></section><p class="live-sleep-note">«Пример дня» и «Периоды» пока содержат вымышленные данные.</p></div></main>`;
+  const today = moscowDate();
+  return `<main class="page live-sleep-page"><div class="content-shell"><section class="live-sleep-hero"><div class="eyebrow">ЛИЧНЫЕ ДАННЫЕ</div><h1>Мои данные</h1><p>Показатели Garmin за выбранный день</p></section><section class="live-sleep-card"><label for="sleep-date">Дата записи</label><input id="sleep-date" type="date" max="${today}" value="${previousDate(today)}" /><p id="live-wellness-status" class="live-sleep-state" role="status" aria-live="polite">Загружаем записи…</p><div class="live-wellness-grid" aria-busy="true">${metrics.map(metric => `<div class="live-wellness-metric" data-metric="${metric.key}"><span class="live-wellness-label">${metric.label}</span><strong class="live-wellness-value">—</strong><span class="live-wellness-unit">${metric.unit}</span></div>`).join('')}</div><p class="live-sleep-source">Источник: Garmin через Intervals.icu. По умолчанию показан вчерашний завершённый день; можно выбрать сегодня. Пропуск означает, что запись не получена.</p></section><p class="live-sleep-note">«Пример дня» и «Периоды» пока содержат вымышленные данные.</p></div></main>`;
 }
 
 export async function loadLiveWellness(date) {
