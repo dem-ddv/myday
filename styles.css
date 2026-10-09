@@ -1,0 +1,270 @@
+:root{font-family:Manrope,DM Sans,sans-serif;color:#132237;background:#f7f5f0;font-synthesis:none}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:radial-gradient(circle at 8% 0%,#fffaf5 0,#f7f5f0 34%,#f6f4ef 100%)}button,a{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.35}a{color:inherit;text-decoration:none}h1,h2,h3,p{margin-top:0}h1,h2,h3{color:#102036}h1,h2,h3,.brand{font-family:'Playfair Display',Georgia,serif}h1{font-size:clamp(42px,5vw,72px);line-height:1.12;letter-spacing:-.045em;margin-bottom:0}h2{letter-spacing:-.025em}.topbar{background:rgba(255,255,255,.72);border-bottom:1px solid #e9e5df;backdrop-filter:blur(14px);position:relative;z-index:5}.topbar-inner{max-width:1480px;margin:auto;min-height:70px;padding:0 42px;display:flex;align-items:center;gap:58px}.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:600;white-space:nowrap}.brand-leaf{font-family:Georgia,serif;display:grid;place-items:center;width:29px;height:29px;background:#dce9dd;color:#3f7762;border-radius:9px;transform:rotate(-12deg);font-size:21px}.desktop-nav{display:flex;align-self:stretch;gap:8px}.nav-item{border:0;background:none;color:#78808b;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 19px;font-size:14px;font-weight:700;white-space:nowrap}.desktop-nav .nav-item{border-bottom:2px solid transparent}.nav-item.active{color:#17324b}.desktop-nav .nav-item.active{border-color:#496b5d}.topbar-note{margin-left:auto;color:#7c858b;font-size:12px;font-weight:700;white-space:nowrap}.demo-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#df9b81;margin-right:6px}.bottom-nav{display:none}.page{min-height:calc(100vh - 70px)}.content-shell{max-width:1480px;padding:0 42px 70px;margin:auto}.eyebrow,.overline,.insight-label{color:#87918d;font-size:11px;letter-spacing:.15em;font-weight:800}.hero{position:relative;min-height:265px;display:flex;align-items:center;padding-top:16px}.hero-copy{z-index:1}.hero-message{margin-top:25px}.hero-message h2{font-size:clamp(26px,2.7vw,38px);line-height:1.22;margin-bottom:7px}.hero-message p{color:#7a818b;font-size:16px;margin-bottom:0}.hero-art{position:absolute;right:5%;top:0;width:200px}.botanical{display:block;width:100%}.demo-banner{display:inline-flex;align-items:center;border:1px solid #eddfd4;border-radius:999px;background:#fff9f4;padding:8px 12px;color:#977866;font-size:11px;font-weight:700;margin:0 0 26px}.today-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:26px}.main-column,.side-column,.period-main-column,.insight-column{min-width:0}.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:15px}.section-heading h2{font-size:25px;margin:0}.section-heading>span{font-size:11px;color:#9a9da0}.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.metric-card,.wide-card,.side-panel,.period-card,.chart-panel,.insight,.source-card{background:rgba(255,255,255,.74);border:1px solid #ede9e3;box-shadow:0 12px 36px rgba(40,43,39,.035);border-radius:22px}.metric-card{appearance:none;text-align:left;padding:23px 23px 18px;min-height:263px;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}.metric-card:hover,.wide-card:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(40,43,39,.09)}.card-top{display:flex;justify-content:space-between;align-items:flex-start}.icon-orb{width:48px;height:48px;border-radius:17px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}.icon-orb.blue{background:#e5eaf2;color:#314e76}.icon-orb.coral{background:#f9e3da;color:#b95545}.icon-orb.sage{background:#e2ebe1;color:#466d5a}.icon-orb.grey{background:#eeeeeb;color:#777f83}.icon-orb.tiny{width:36px;height:36px;border-radius:12px}.card-arrow{color:#9ba4ab}.metric-card h3{font-size:23px;margin:9px 0 0}.metric-value{font-family:'Playfair Display',Georgia,serif;font-size:clamp(28px,2.8vw,43px);font-weight:600;letter-spacing:-.04em;white-space:nowrap;line-height:1.25;margin-top:7px}.metric-value small,.wide-card h3 small{font-family:Manrope,sans-serif;color:#7c838a;font-size:.42em;font-weight:600;letter-spacing:0}.metric-note{font-size:12px;color:#81898e;min-height:20px;margin:7px 0 15px}.metric-note .badge{margin-left:3px}.progress{background:#e9e9e4;border-radius:50px;height:8px;overflow:hidden}.progress span{display:block;height:100%;border-radius:inherit}.card-foot{font-size:10px;color:#9da1a1;margin-top:auto;padding-top:15px}.food-dashes{display:flex;gap:5px;height:11px;align-items:center}.food-dashes>*{display:block;border-radius:20px;background:#83a892;width:18%;height:8px}.food-dashes i{background:#e6e7df}.badge{display:inline-block;border-radius:999px;background:#f1f1ed;color:#79817e;padding:5px 8px;font-size:10px;font-weight:800;letter-spacing:0;white-space:nowrap}.badge.warm{color:#a66b58;background:#fbe9e1}.badge.green{color:#477b61;background:#e5f0e6}.under-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.wide-card{border-radius:20px;appearance:none;text-align:left;min-height:142px;padding:21px 24px;display:flex;align-items:center;gap:15px;transition:transform .18s,box-shadow .18s}.wide-card h3{font-size:27px;margin:4px 0}.wide-card p{font-size:11px;color:#8c9297;line-height:1.55;margin:0}.energy-card{background:#e9efe8;border-color:#e2e9df;justify-content:space-between}.energy-mark{font-family:Georgia,serif;font-size:70px;color:#9ab7a4;line-height:1}.workout-card>svg:last-child{margin-left:auto;color:#9da8a5}.side-column{padding-top:40px;display:flex;flex-direction:column;gap:15px}.side-panel{padding:22px}.side-panel .section-heading h2{font-size:22px}.mini-row{display:flex;align-items:center;gap:10px;padding:16px 0;border-bottom:1px solid #eeece6}.mini-row:last-of-type{border:0}.mini-row div{display:flex;flex-direction:column;gap:2px}.mini-row strong{font-size:12px}.mini-row span:not(.icon-orb):not(.badge){font-size:10px;color:#93999e}.mini-row b,.mini-row>.badge{margin-left:auto;font-size:12px;white-space:nowrap}.panel-caption{font-size:11px;color:#92989b;line-height:1.6;margin:10px 0 0}.gentle-panel{background:#edf2e9;border-color:#e7eee5}.gentle-icon{font-size:26px;color:#6d977a;margin-bottom:10px}.gentle-panel h3{font-size:21px;margin-bottom:8px}.gentle-panel p{font-size:12px;line-height:1.7;color:#6c8074;margin:0}.period-hero{min-height:205px;display:flex;justify-content:space-between;align-items:center;gap:20px}.period-hero p{color:#858e92;margin:15px 0 0;font-size:14px}.segmented{padding:4px;background:#eeede7;border-radius:14px;display:flex;gap:4px}.segmented button,.chart-tabs button{border:0;border-radius:10px;background:none;color:#7d8788;padding:10px 15px;font-size:12px;font-weight:800}.segmented button.selected,.chart-tabs button.selected{background:#254b3c;color:#fff;box-shadow:0 4px 9px #254b3c1e}.period-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:24px}.month-switch{display:flex;align-items:center;gap:16px}.month-switch button{width:37px;height:37px;display:grid;place-items:center;border:1px solid #e7e5df;border-radius:12px;background:#fffdfa;color:#3f5664;flex:0 0 auto}.month-switch div{text-align:center;min-width:0}.month-switch h2{font-size:28px;margin:0}.month-switch span{font-size:12px;color:#889096}.comparison-note{display:flex;align-items:center;gap:8px;background:#edf1ec;color:#607365;border-radius:11px;margin:16px 0;padding:10px 13px;font-size:11px;line-height:1.45}.comparison-note svg{flex:0 0 auto}.period-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.period-card{padding:18px;min-height:195px}.period-card-head{display:flex;align-items:center;gap:11px}.period-card-head .icon-orb{width:39px;height:39px;border-radius:14px}.period-card h3{font-size:20px;margin:0 0 1px}.period-card-head span:not(.icon-orb){font-size:10px;color:#93999a}.period-main{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0 10px}.period-main strong{font-family:'Playfair Display',Georgia,serif;font-size:32px;letter-spacing:-.04em;white-space:nowrap;line-height:1.2}.line-chart{width:100%;height:240px;display:block;overflow:visible}.line-chart.compact{width:44%;height:68px;min-width:105px}.period-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:4px}.period-card-bottom>span:first-child{font-size:10px;color:#9ba1a0}.food-days{display:flex;gap:4px;width:44%;flex-wrap:wrap;justify-content:flex-end}.food-days span{width:8px;height:8px;border-radius:50%;border:1px solid #9baa9e}.food-days span.filled{background:#719980;border-color:#719980}.chart-panel{margin-top:14px;padding:24px}.chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.chart-head h2{font-size:25px;margin:3px 0 0}.chart-tabs{display:flex;background:#f1f0ec;border-radius:12px;padding:3px}.chart-tabs button{padding:7px 11px}.chart-panel .line-chart{margin-top:22px}.chart-legend{display:flex;gap:22px;justify-content:center;color:#77828b;font-size:11px}.chart-legend span{display:flex;align-items:center;gap:7px}.chart-legend i{width:25px;border-top:3px solid #263f62}.chart-legend .previous-line{border-color:#b7c1c4;border-style:dashed}.chart-caption{font-size:10px;color:#a0a6a7;margin:12px 0 0;text-align:center}.insight-column{padding-top:97px;display:flex;flex-direction:column;gap:13px}.insight{padding:23px}.insight.attention{background:#f8eae4;border-color:#f3e2d9}.insight.improvement{background:#eaf1e8;border-color:#e2ecdf}.insight.completeness{background:#fdfcf9}.insight h3{font-size:21px;line-height:1.3;margin:13px 0 8px}.insight p{font-size:12px;line-height:1.7;color:#71807e;margin:0}.insight.attention p{color:#88746d}.coverage-bar{margin-top:17px}.sources-page .content-shell{padding-top:54px}.sources-page h1{margin:8px 0}.sources-intro{color:#7d8789;max-width:620px;font-size:15px;line-height:1.6;margin-bottom:32px}.source-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:940px}.source-card{padding:26px}.source-card h2{font-size:23px;margin:16px 0 10px}.source-card p{font-size:13px;line-height:1.7;color:#7e898a;min-height:65px}.text-link{background:none;border:0;color:#416e59;font-weight:800;font-size:12px;padding:0}.modal-open{overflow:hidden}.modal-backdrop{position:fixed;inset:0;z-index:20;background:#14263672;display:flex;justify-content:flex-end;align-items:stretch}.detail-modal{width:min(480px,100%);background:#fbfaf6;padding:44px 34px;overflow:auto;position:relative;box-shadow:-12px 0 50px #12223130}.modal-close{position:absolute;top:28px;right:28px;width:36px;height:36px;display:grid;place-items:center;border:1px solid #e6e4df;border-radius:50%;background:#fff;color:#6c777d}.detail-modal h2{font-size:31px;margin:18px 0 2px}.detail-value{font-family:'Playfair Display',Georgia,serif;font-size:44px;font-weight:600;letter-spacing:-.04em}.detail-modal>p{font-size:13px;line-height:1.7;color:#758186;margin:15px 0 26px}.detail-rows{border-top:1px solid #e9e8e1}.detail-rows>div{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid #e9e8e1;font-size:12px}.detail-rows span{color:#8b9496}.detail-rows strong{text-align:right}.detail-demo{font-size:11px;color:#a77867;background:#faeee6;border-radius:12px;padding:12px;margin-top:24px}
+@media(max-width:1100px){.content-shell{padding-inline:25px}.topbar-inner{padding-inline:25px}.today-layout,.period-layout{grid-template-columns:minmax(0,1fr) 260px}.metric-grid{gap:10px}.metric-card{padding:17px}.metric-value{font-size:30px}.side-panel,.insight{padding:18px}.period-card-grid{gap:9px}.period-card{padding:14px}.period-main strong{font-size:27px}.line-chart.compact{min-width:80px}}
+@media(max-width:800px){.topbar{display:none}.content-shell{padding:0 18px 112px}.page{min-height:100vh}.hero{min-height:257px;align-items:flex-start;padding-top:45px}.hero-copy .eyebrow{font-size:10px}.hero h1{font-size:43px}.hero-message{margin-top:33px;max-width:310px}.hero-message h2{font-size:31px;line-height:1.18}.hero-message p{font-size:14px;line-height:1.45;max-width:260px}.hero-art{width:100px;right:5px;top:10px;opacity:.85}.demo-banner{margin:0 0 19px;font-size:10px;max-width:100%;line-height:1.4}.today-layout,.period-layout{display:block}.section-heading h2{font-size:24px}.section-heading>span{display:none}.metric-grid{display:flex;flex-direction:column;gap:13px}.metric-card{min-height:180px;display:grid;grid-template-columns:68px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:11px;padding:20px 20px 16px}.card-top{grid-row:1/4;grid-column:1;align-items:flex-start}.card-arrow{display:none}.metric-card h3{grid-column:2;grid-row:1;font-size:25px;margin:0 0 4px}.metric-value{grid-column:2;grid-row:2;font-size:37px;margin:0}.metric-note{grid-column:2;grid-row:3;font-size:11px;margin:4px 0 13px;min-height:0}.metric-card .progress,.food-dashes{grid-column:1/3;grid-row:4}.card-foot{grid-column:1/3;grid-row:5;padding-top:12px}.icon-orb{border-radius:50%;width:54px;height:54px}.under-grid{display:flex;flex-direction:column;gap:13px;margin-top:13px}.wide-card{min-height:124px}.side-column{padding-top:13px}.side-panel.gentle-panel{display:none}.bottom-nav{display:flex;position:fixed;z-index:10;bottom:0;left:0;right:0;padding:10px 10px calc(10px + env(safe-area-inset-bottom));background:#fffdfaef;backdrop-filter:blur(18px);border-top:1px solid #eae8e3;box-shadow:0 -10px 25px #383c3510;justify-content:space-around}.bottom-nav .nav-item{flex-direction:column;gap:3px;min-width:80px;font-size:10px;padding:3px 9px}.bottom-nav .nav-item.active svg{fill:#e5eee8}.period-hero{display:block;min-height:0;padding-top:45px}.period-hero h1{font-size:43px}.period-hero p{font-size:12px;margin:11px 0 25px}.period-mode-label{display:inline-block;color:#4b715d;background:#e7eee8;border-radius:9px;padding:9px 11px;font-size:11px;font-weight:800}.month-switch{margin-top:26px;justify-content:space-between;gap:8px}.month-switch h2{font-size:24px}.month-switch span{font-size:10px}.comparison-note{margin:16px 0;font-size:10px}.period-card-grid{display:flex;flex-direction:column;gap:11px}.period-card{min-height:164px;padding:16px}.period-main strong{font-size:34px}.line-chart.compact{height:65px;width:46%}.chart-panel{padding:20px 15px;margin-top:12px}.chart-head{display:block}.chart-head h2{font-size:24px}.chart-tabs{margin-top:15px;display:inline-flex}.chart-panel .line-chart{height:190px;margin-top:16px}.insight-column{padding-top:13px}.insight{padding:20px}.source-grid{display:flex;flex-direction:column}.sources-page .content-shell{padding-top:45px}.sources-page h1{font-size:43px}.source-card p{min-height:0}.detail-modal{align-self:flex-end;width:100%;max-height:90vh;border-radius:24px 24px 0 0;padding:28px 24px calc(30px + env(safe-area-inset-bottom))}.modal-close{top:22px;right:22px}}
+@media(max-width:380px){.hero-art{width:120px;right:-12px}.hero-message{max-width:285px}.hero-message h2{font-size:28px}.metric-value{font-size:32px}.metric-note .badge{display:inline-block;margin-top:4px}.period-main strong{font-size:30px}.period-card-bottom>span:first-child{font-size:9px}}
+
+/* Content and provenance have separate visual weight. */
+.period-card-head{align-items:flex-start}
+.period-card-head>div{min-width:0}
+.period-card-head .period-subtitle{display:block;margin-top:4px;color:#465963;font-size:14px;font-weight:700;line-height:1.45}
+.period-card-bottom>span:first-child{font-size:11px;color:#707d7c}
+.detail-updated{margin-top:18px;color:#758187;font-size:12px;line-height:1.5}
+.detail-source{margin-top:19px;padding-top:16px;border-top:1px solid #e9e8e1;color:#718087;font-size:12px}
+.detail-source summary{cursor:pointer;width:max-content;max-width:100%;color:#526e63;font-weight:700}
+.detail-source summary:hover{text-decoration:underline}
+.detail-source p{max-width:37ch;margin:10px 0 0;line-height:1.6}
+@media(max-width:800px){.period-card{min-height:176px}.period-card-head .period-subtitle{font-size:14px}.period-card-bottom>span:first-child{font-size:11px}}
+.coverage-list{display:grid;gap:0;margin-top:12px}
+.coverage-list>div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #e8e8e1;font:600 13px/1.4 Manrope,sans-serif;color:#54615f}
+.coverage-list>div:last-child{border-bottom:0}
+.coverage-list strong{color:#17283a;white-space:nowrap}
+
+/* Compact overview: the three daily values should be available immediately. */
+.today-page .hero{min-height:156px;align-items:flex-start;padding-top:38px}
+.today-page .hero-art{top:8px;width:135px}
+.today-page .metric-card{min-height:244px}
+.today-page .metric-note{font-size:13px;color:#5e6e75}
+.today-page .card-foot{font-size:12px;color:#647179}
+.today-page .card-status{margin-top:auto}
+.today-page .energy-card{width:100%;margin-top:15px}
+.icon-orb.lavender{background:#eee8f3;color:#6c5b82}
+.weight-summary{width:100%;min-height:160px;display:flex;align-items:flex-start;gap:13px;padding:22px;text-align:left;border:1px solid #ede9e3;border-radius:22px;background:rgba(255,255,255,.78);box-shadow:0 12px 36px rgba(40,43,39,.035)}
+.weight-summary:hover{box-shadow:0 15px 35px rgba(40,43,39,.09)}
+.weight-summary-copy{display:flex;min-width:0;flex-direction:column;gap:8px}
+.weight-summary-copy strong{font-family:'Playfair Display',Georgia,serif;font-size:30px;line-height:1.1;color:#102036}
+.weight-summary-copy>span:last-child{font-size:12px;line-height:1.5;color:#65747a}
+@media(max-width:800px){.today-page .hero{min-height:110px;padding-top:26px}.today-page .hero-art{width:83px;top:2px;right:3px}.today-page .metric-card{min-height:158px}.today-page .metric-note{font-size:12px;margin-bottom:9px}.today-page .card-status{grid-column:2;grid-row:4;margin-top:0}.today-page .card-foot{font-size:11px;padding-top:8px}.today-page .energy-card{margin-top:13px}.today-page .side-column{padding-top:13px}.weight-summary{min-height:130px}.weight-summary-copy strong{font-size:28px}}
+
+/* Period summaries carry distinct information; the chart has its own axes. */
+
+/* The first personal metric has its own screen until the other data is connected. */
+.live-sleep-page .content-shell{max-width:840px;padding-top:65px}
+.live-sleep-hero h1{margin:10px 0 10px}
+.live-sleep-hero p{color:#68767c;font-size:16px;line-height:1.5}
+.live-sleep-card{margin-top:34px;padding:32px;background:rgba(255,255,255,.8);border:1px solid #ede9e3;border-radius:24px;box-shadow:0 12px 36px rgba(40,43,39,.035)}
+.live-sleep-card label{display:block;color:#536761;font-size:13px;font-weight:700;margin-bottom:9px}
+.live-sleep-card input{font:600 16px Manrope,sans-serif;color:#132237;background:#f8f8f4;border:1px solid #d8dfd9;border-radius:12px;padding:12px 14px;max-width:100%}
+.live-sleep-card input:focus-visible{outline:3px solid #a6c2ac;outline-offset:2px}
+#live-sleep-result{display:flex;flex-direction:column;gap:5px;min-height:122px;justify-content:center;margin-top:22px;border-top:1px solid #e9e8e1}
+.live-sleep-value{font:600 clamp(36px,5vw,58px)/1.2 'Playfair Display',Georgia,serif;color:#102036}
+.live-sleep-state{color:#60716e;font-size:14px;line-height:1.5}
+.live-sleep-source{font-size:12px;color:#758187;margin:2px 0 0}
+.live-sleep-note{font-size:12px;color:#78848a;line-height:1.5;margin:22px 0}
+@media(max-width:800px){.live-sleep-page .content-shell{padding:35px 18px 115px}.live-sleep-hero h1{font-size:46px}.live-sleep-card{padding:22px;margin-top:24px}.bottom-nav .nav-item{min-width:0;flex:1;padding:3px 5px}}
+.periods-page .period-hero{min-height:132px}
+.pin-page{min-height:100svh;display:grid;place-items:center;padding:24px}.pin-card{width:min(100%,420px);background:#fffdf9;border:1px solid #e9e5df;border-radius:26px;box-shadow:0 18px 60px #1b332014;padding:38px}.pin-card h1{font-size:48px;margin:10px 0 12px}.pin-card>p{color:#60716e;line-height:1.5}.pin-card form{display:grid;gap:12px;margin-top:30px}.pin-card label{font-size:14px;font-weight:700}.pin-card input{width:100%;border:1px solid #cbd3cb;border-radius:14px;background:white;color:#102036;font:700 26px Manrope,sans-serif;letter-spacing:.28em;padding:12px 16px;min-height:58px}.pin-card input:focus{outline:2px solid #57886e;outline-offset:2px}.pin-card button{border:0;border-radius:14px;min-height:52px;background:#3f7762;color:white;font-weight:700}.pin-card button:disabled{opacity:.5}.pin-message{min-height:24px;color:#9c4e46;font-size:14px;line-height:1.5;margin:16px 0 0}.pin-loading{color:#60716e}
+.periods-page .period-layout{display:block}
+.periods-page .period-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.periods-page .period-card{min-height:178px}
+.periods-page .period-main{margin-top:19px}
+.periods-page .period-main strong{font-size:29px}
+.periods-page .period-subtitle{font-size:13px}
+.periods-page .comparison-note{font-size:13px;color:#4e6257}
+.coverage-panel{margin-top:16px;padding:18px 22px;background:#fdfcf9;border:1px solid #ede9e3;border-radius:20px}
+.coverage-panel h2{font-size:20px;margin:0 0 8px}
+.coverage-panel .coverage-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0}
+.coverage-panel .coverage-list>div{border:0;padding:4px 0;align-items:center}
+.chart-visual{display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px;margin-top:22px}
+.chart-y-axis{height:205px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding:4px 0;color:#62737a;font:600 12px/1.2 Manrope,sans-serif;white-space:nowrap}
+.chart-plot{min-width:0}
+.chart-panel .chart-visual .line-chart{height:205px;margin:0}
+.chart-x-axis{display:flex;justify-content:space-between;color:#62737a;font:600 12px/1.2 Manrope,sans-serif;margin-top:7px}
+.chart-caption{font-size:12px;color:#68767c;line-height:1.5}
+.chart-legend{font-size:12px;margin-top:16px}
+.chart-legend .previous-line{border-color:#89979c}
+.month-switch span{font-size:13px;color:#61717a}
+.periods-page .period-card-head span.period-subtitle{font-size:14px;color:#465963;font-weight:700;line-height:1.4}
+.weight-mini{position:relative;width:44%;height:68px;min-width:100px;flex:0 0 auto}
+.weight-mini i{position:absolute;width:7px;height:7px;border-radius:50%;background:#745f84;transform:translate(-50%,-50%)}
+@media(max-width:1100px){.periods-page .period-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.coverage-panel .coverage-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.periods-page .period-hero{min-height:0}.periods-page .period-card-grid{display:flex;flex-direction:column}.periods-page .period-card{min-height:150px}.periods-page .period-main{margin-top:14px}.periods-page .comparison-note{font-size:12px}.coverage-panel{padding:18px}.coverage-panel .coverage-list{gap:5px 14px}.coverage-panel .coverage-list>div{font-size:12px}.chart-visual{grid-template-columns:56px minmax(0,1fr);gap:5px;margin-top:16px}.chart-y-axis{height:190px;font-size:12px}.chart-panel .chart-visual .line-chart{height:190px;margin:0}.chart-x-axis{font-size:12px}.chart-caption{font-size:12px}}
+
+/* Detail text stays legible while update time and source remain secondary. */
+.detail-modal>p{font-size:14px;color:#5d6d75}
+.detail-rows>div{font-size:14px}
+.detail-rows span{color:#62727a}
+.detail-updated,.detail-source{font-size:13px}
+.detail-source p{max-width:44ch}
+.detail-trend{margin-top:16px;padding:0;border:0;background:none;color:#315f4e;font:800 13px/1.5 Manrope,sans-serif;text-align:left}
+.detail-trend:hover{text-decoration:underline}
+.energy-card p{font-size:13px;color:#5d6e70}
+.energy-card h3 small{font-size:14px}
+.eyebrow,.overline,.insight-label{font-size:12px}
+.badge{font-size:11px}
+@media(max-width:800px){.detail-modal>p{font-size:14px}.detail-rows>div{font-size:13px}.detail-updated,.detail-source{font-size:12px}}
+@media(max-width:800px){.today-page .hero-copy .eyebrow{font-size:12px}.today-page .metric-note{font-size:13px}.today-page .card-foot{font-size:12px}.month-switch span{font-size:13px}.chart-caption{font-size:12px}.badge{font-size:12px}}
+
+/* Period values are paired and labeled before any detailed comparison. */
+.focus-card{padding:24px;border-radius:22px;background:#eaf0e8;border:1px solid #dee9dc}
+.focus-card h2{font-size:26px;line-height:1.22;margin:12px 0 10px}
+.focus-card p{font-size:14px;line-height:1.65;color:#51675b;margin:0}
+.periods-page .period-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.periods-page .period-card{min-height:0;padding:23px}
+.periods-page .period-card-head{align-items:center;gap:13px}
+.periods-page .period-card h3{font-size:23px}
+.period-compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:19px 0 10px}
+.period-compare>div{min-width:0;display:flex;flex-direction:column;gap:5px}
+.period-compare>div+div{border-left:1px solid #e4e8e3;padding-left:18px}
+.period-compare span{color:#596b70;font-size:13px;line-height:1.3}
+.period-compare strong{font-family:'Playfair Display',Georgia,serif;font-size:30px;line-height:1.2;white-space:nowrap;color:#102036}
+.period-compare>div+div strong{color:#647277}
+.period-change{font-size:14px;font-weight:800;color:#2f5f4d;margin:3px 0 13px}
+.period-coverage{font-size:12px;color:#596b70;line-height:1.4;margin:0}
+.period-caveat{font-size:12px;color:#7b6e64;line-height:1.45;margin:8px 0 0}
+.comparison-panel{padding:28px;margin-top:18px}
+.comparison-intro{font-size:13px;color:#5e7076;line-height:1.5;margin:15px 0 20px}
+.comparison-table{border-top:1px solid #e2e7e2}
+.comparison-table-row{display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:12px;align-items:center;padding:13px 16px;border-bottom:1px solid #e8ece7;font-size:14px;color:#647276}
+.comparison-table-row:nth-child(even){background:#f5f8f4}
+.comparison-table-row>*:not(:first-child){text-align:right}
+.comparison-table-row strong{font-size:15px;color:#142d3a}
+.comparison-table-head{background:#edf3ec!important;color:#354e45;font-weight:800;text-transform:capitalize}
+.comparison-panel .chart-caption{text-align:left;margin-top:15px}
+@media(max-width:800px){.focus-card{padding:22px}.periods-page .period-card-grid{display:flex;flex-direction:column;gap:12px}.periods-page .period-card{padding:20px}.period-compare strong{font-size:27px}.period-compare span{font-size:12px}.comparison-panel{padding:18px 14px}.comparison-table-row{padding:12px 8px;gap:5px;font-size:12px}.comparison-table-row strong{font-size:13px}.chart-head h2{font-size:22px}}
+@media(max-width:370px){.period-compare{gap:10px}.period-compare>div+div{padding-left:10px}.period-compare strong{font-size:24px}}
+
+/* Adjacent periods: prior value on the left, current value on the right. */
+.period-mode{display:inline-flex;gap:4px;padding:5px;border-radius:15px;background:#e8ede7;margin:2px 0 22px}
+.period-mode button{border:0;background:transparent;border-radius:11px;padding:10px 19px;color:#53675e;font-size:14px;font-weight:800}
+.period-mode button.selected{background:#284d3f;color:#fff;box-shadow:0 4px 10px #23473920}
+.period-direction{display:grid;grid-template-columns:1fr 46px 1fr;align-items:center;max-width:740px;gap:14px;margin-bottom:10px}
+.period-direction>div{display:flex;flex-direction:column;gap:4px}
+.period-direction>div:last-child{text-align:right}
+.period-direction span{color:#697a78;font-size:12px;font-weight:800;letter-spacing:.12em}
+.period-direction strong{font-family:'Playfair Display',Georgia,serif;font-size:25px;color:#102036}
+.period-direction>span{font-size:25px;color:#628a72;text-align:center}
+.period-explainer{font-size:14px;color:#5f7276;line-height:1.5;margin:0 0 22px}
+.periods-page .compare-card{padding:24px;min-height:244px}
+.compare-card .period-card-head h3{margin:0}
+.compare-subtitle{display:block;margin-top:3px;color:#677779;font-size:12px}
+.before-after{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);gap:12px;align-items:start;margin:18px 0 15px}
+.before-after>div{display:flex;flex-direction:column;min-width:0;gap:5px}
+.before-after>div:last-child{text-align:right}
+.before-after span:not(.compare-arrow){font-size:11px;font-weight:800;line-height:1.35;color:#68787b}
+.before-after strong{font-family:'Playfair Display',Georgia,serif;font-size:31px;line-height:1.1;white-space:nowrap;color:#7a898b}
+.before-after .after-value strong{color:#102036}
+.before-after small{font-size:13px;color:#52686c;font-weight:600;white-space:normal;line-height:1.4}
+.compare-arrow{font-size:24px;color:#5b876b;margin-top:19px;text-align:center}
+.compare-change{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-top:1px solid #e8eae5;padding-top:13px;font-size:13px;color:#667776}
+.compare-change strong{font-size:16px;color:#285f49;white-space:nowrap}
+.compare-warning{font-size:11px;color:#836e5f;margin:7px 0 0;line-height:1.35}
+.difference-panel{margin-top:18px;padding:26px}
+.difference-panel .chart-head{align-items:end}
+.difference-tabs{flex-wrap:wrap}
+.difference-explanation{background:#eaf1e8;border-radius:14px;color:#365e4d;font-size:14px;line-height:1.55;padding:16px 18px;margin:18px 0 23px}
+.difference-heading{font-size:21px;margin:0 0 13px}
+.difference-table{border-top:1px solid #e3e8e1}
+.difference-row{display:grid;grid-template-columns:1fr 1.2fr 1.2fr 1.3fr;gap:10px;align-items:center;padding:13px 15px;border-bottom:1px solid #e5eae3;font-size:13px;color:#596d70}
+.difference-row:nth-child(even){background:#f5f8f4}
+.difference-row>*:not(:first-child){text-align:right}
+.difference-row strong{color:#122c38;font-size:14px}
+.difference-head{background:#ebf2e9!important;color:#365246;font-weight:800}
+.period-method{margin-top:16px;color:#647477;font-size:12px}
+.period-method summary{cursor:pointer;font-weight:800;color:#406b53}
+.period-method p{line-height:1.55;margin:9px 0 0;max-width:70ch}
+@media(max-width:800px){.period-mode{display:flex;margin-top:20px}.period-mode button{flex:1;padding:9px}.period-direction{grid-template-columns:1fr 25px 1fr;gap:5px}.period-direction strong{font-size:17px;line-height:1.2}.period-direction span{font-size:10px}.period-explainer{font-size:12px}.periods-page .compare-card{padding:19px;min-height:0}.before-after{gap:5px;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)}.before-after strong{font-size:25px}.before-after span:not(.compare-arrow){font-size:10px}.compare-arrow{font-size:19px}.difference-panel{padding:18px 14px}.difference-tabs{display:flex}.difference-tabs button{flex:1;padding:7px 5px;font-size:11px}.difference-row{gap:4px;padding:11px 6px;font-size:10px}.difference-row strong{font-size:11px}.difference-explanation{font-size:12px;padding:12px}.difference-heading{font-size:19px}}
+
+/* Keep the comparison itself as the whole screen; dates and tint carry direction. */
+.periods-page .period-hero{min-height:115px}
+.period-mode{margin-bottom:19px}
+.periods-page .period-card-grid{gap:13px}
+.periods-page .compare-card{padding:21px 24px;min-height:0}
+.before-after{gap:9px;margin:14px 0 12px;align-items:center}
+.before-after .before-value{text-align:right}
+.before-after > div.after-value{text-align:left}
+.before-after span:not(.compare-arrow){font-size:12px;font-weight:700;color:#697a7d}
+.before-after .after-value span{color:#3d6564}
+.before-after strong{font-size:32px;color:#657579}
+.compare-arrow{margin:8px 0 0;color:#557b66}
+.compare-change{justify-content:center;border:0;padding:0;margin-top:4px}
+.compare-change strong{color:#3d5960;background:#edf2f1;border-radius:999px;padding:5px 11px;font-size:14px}
+.compare-warning{text-align:center;margin-top:7px;font-size:12px}
+.compact-method{margin:17px 0 0;padding:0 2px}
+.compact-method summary{font-size:14px}
+.compact-method p{font-size:14px;color:#53666b;line-height:1.6}
+.weight-summary{cursor:default}
+.weight-summary:hover{box-shadow:0 12px 36px rgba(40,43,39,.035)}
+@media(max-width:800px){.periods-page .period-hero{min-height:0}.period-mode{margin-bottom:16px}.periods-page .compare-card{padding:18px}.before-after{gap:4px;margin:13px 0 11px;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)}.before-after span:not(.compare-arrow){font-size:11px}.before-after strong{font-size:24px}.before-after small{font-size:11px}.compare-arrow{font-size:18px}.compare-change strong{font-size:13px}.compact-method{margin-top:17px}}
+
+@media(min-width:801px){
+  .periods-page .content-shell{max-width:1200px}
+  .periods-page .compare-card{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;align-content:center;column-gap:15px;min-height:170px;padding:17px 22px}
+  .compare-card .period-card-head{grid-column:1;grid-row:1;align-self:center}
+  .compare-card .before-after{grid-column:1 / -1;grid-row:2;margin:12px 0 0;gap:7px}
+  .compare-card .before-after strong{font-size:clamp(23px,2.35vw,28px)}
+  .compare-card .compare-change{grid-column:2;grid-row:1;justify-content:flex-end;align-self:center;margin:0}
+}
+.compare-card .period-card-head .compare-subtitle{font-size:14px;color:#53666b;font-weight:600;line-height:1.35}
+@media(max-width:800px){.compact-method p{font-size:13px}}
+
+/* History-first period cards. */
+.period-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:2px 0 18px}
+.periods-page .period-controls .period-mode{margin:0}
+.period-asof{font-size:12px;font-weight:650;color:#667a79;white-space:nowrap}
+.periods-page .period-card-grid{gap:18px}
+.periods-page .trend-card{display:block;min-height:0;padding:24px 26px 18px}
+.trend-card .period-card-head{align-items:center;gap:12px}
+.trend-card .period-card-head h2{font-size:23px;line-height:1.1;margin:0 0 3px}
+.trend-card .period-card-head .trend-unit{display:block;font-size:13px;line-height:1.4;color:#607173;font-weight:650}
+.history-chart{margin:24px 0 12px}
+.history-visual{display:grid;grid-template-columns:46px minmax(0,1fr);gap:8px;height:160px}
+.history-y{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;color:#728184;font-size:11px;font-weight:700;line-height:1;white-space:nowrap;padding:0 0 1px}
+.history-track{position:relative;min-width:0;height:100%}
+.history-guides{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.history-guides i{width:100%;border-top:1px solid #e4eae5}
+.history-gap-note{position:absolute;left:0;top:48%;width:var(--gap-width);transform:translateY(-50%);z-index:1;text-align:center;color:#899892;font:600 11px/1.3 Manrope,sans-serif;pointer-events:none}
+.history-bars{position:absolute;inset:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px}
+.history-bar-slot{height:100%;display:flex;align-items:flex-end;justify-content:center;min-width:0}
+.history-bar{width:min(32px,82%);height:var(--height);border:0;border-radius:6px 6px 2px 2px;background:#b8c9bf;position:relative;min-height:2px;padding:0;transition:filter .15s,transform .15s}
+.history-bar.current{background:#86a890}
+.history-bar.partial{background:repeating-linear-gradient(135deg,#86a890 0 7px,#b0c8b6 7px 10px)}
+.history-bar:hover,.history-bar:focus{filter:brightness(.94);z-index:5}
+.history-bar:focus{outline:none}
+.history-bar:focus-visible{outline:2px solid #2e624c;outline-offset:3px}
+.history-missing{font-size:16px;color:#8b9995;margin-bottom:1px;border:0;background:transparent;position:relative;width:100%;height:24px;padding:0}
+.history-missing:focus{outline:none}
+.history-missing:focus-visible{outline:2px solid #345f4a;outline-offset:2px;border-radius:4px}
+.history-line{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.history-line polyline{fill:none;stroke:#7798a3;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.history-point{position:absolute;left:var(--x);top:var(--y);width:30px;height:30px;border:0;border-radius:50%;background:transparent;transform:translate(-50%,-50%);padding:0;z-index:1}
+.history-point::before{content:'';position:absolute;left:50%;top:50%;width:11px;height:11px;transform:translate(-50%,-50%);border:1.5px solid #fff;border-radius:50%;background:#93adb6;box-shadow:0 0 0 1px #628593}
+.history-point.current::before{background:#779f8a;box-shadow:0 0 0 1px #557e69}
+.history-point.partial::before{border-style:dashed}
+.history-point:hover,.history-point:focus{z-index:5}
+.history-point:focus{outline:none}
+.history-point:focus-visible{outline:2px solid #2e624c;outline-offset:2px}
+.history-point:hover::before{box-shadow:0 0 0 3px #dce9e1}
+.history-tip{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);min-width:142px;max-width:min(190px,calc(100vw - 36px));width:max-content;box-sizing:border-box;border:1px solid #d9e4dc;border-radius:10px;background:#f8faf7;color:#173332;box-shadow:0 8px 20px #1c3d3021;padding:8px 11px;text-align:left;display:none;pointer-events:none;z-index:10;font-family:Manrope,sans-serif;white-space:normal}
+.history-point .history-tip{bottom:calc(100% + 1px)}
+.history-tip-date,.history-tip-meta{display:block;color:#607773;font-size:11px;font-weight:550;line-height:1.25}
+.history-tip-value{display:block;color:#173b31;font-size:14px;font-weight:800;line-height:1.3;margin-top:3px}
+.history-tip-meta{margin-top:3px}
+.history-point:hover .history-tip,.history-point:focus .history-tip,.history-bar:hover .history-tip,.history-bar:focus .history-tip,.history-missing:hover .history-tip,.history-missing:focus .history-tip{display:block}
+.tip-left .history-tip{left:0;transform:none}
+.tip-right .history-tip{left:auto;right:0;transform:none}
+.history-point.tip-below .history-tip{top:calc(100% + 8px);bottom:auto}
+.history-bar.tip-below .history-tip{top:12px;bottom:auto}
+.history-x{position:relative;margin:9px 0 0 54px;height:20px;color:#667a7b;font-size:11px;font-weight:700}
+.history-x span{position:absolute;left:var(--x);transform:translateX(-50%);white-space:nowrap}
+.history-x span:first-child{transform:translateX(-10%)}
+.history-x span:last-child{transform:translateX(-90%);color:#285f4b}
+.history-x.year span:nth-last-child(2){transform:translateX(calc(-100% - 8px))}
+.history-comparison{border-top:1px solid #e5eae5;padding-top:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.history-pair{display:flex;align-items:baseline;gap:10px;min-width:0;font-family:'Playfair Display',Georgia,serif;font-size:27px;font-weight:700;letter-spacing:-.035em;line-height:1.2;white-space:nowrap}
+.history-pair>span:not(.history-arrow){display:flex;flex-direction:column}
+.history-old{color:#778788}
+.history-new{color:#102c3b}
+.history-arrow{font:600 19px Manrope,sans-serif;color:#648b72}
+.history-pair small{font:700 11px Manrope,sans-serif;letter-spacing:0;color:#6b7b7c;margin-top:4px}
+.history-delta{flex:0 0 auto;border-radius:999px;background:#e9f0ed;color:#355d56;font-size:13px;font-weight:800;padding:6px 10px;white-space:nowrap}
+.trend-caveat{font-size:13px;font-weight:700;line-height:1.4;color:#785b4c;margin:10px 0 0}
+.period-macros{border-top:1px solid #e5eae5;margin-top:14px;padding-top:11px;color:#506a6d;font-size:12px}
+.period-macros summary{cursor:pointer;font-weight:750;color:#3c6c5a}
+.period-macros[open] summary{margin-bottom:9px}
+.period-macro-head{color:#748184;font-size:11px;margin-bottom:4px}
+.period-macros>div:not(.period-macro-head){display:flex;justify-content:space-between;gap:12px;padding:5px 0}
+.period-macros strong{color:#233c48;font-size:12px}
+@media(max-width:1050px){.trend-card.nutrition .history-comparison{flex-wrap:wrap}.trend-card.nutrition .history-delta{margin-left:auto}}
+@media(max-width:800px){.periods-page .trend-card{padding:19px 18px 15px}.history-chart{margin-top:21px}.history-visual{grid-template-columns:39px minmax(0,1fr);gap:6px;height:145px}.history-x{margin-left:45px}.history-pair{font-size:23px;gap:7px}.history-delta{font-size:12px;padding:5px 8px}.trend-card .period-card-head h2{font-size:22px}.trend-card .period-card-head .trend-unit{font-size:12px}.history-tip{max-width:min(175px,calc(100vw - 36px))}.history-tip-value{font-size:13px}}
+@media(max-width:800px){.period-controls{display:block;margin:20px 0 15px}.period-asof{display:block;text-align:right;margin-top:7px;font-size:11px}}
+@media(max-width:380px){.history-comparison{align-items:flex-start;flex-direction:column;gap:8px}.history-pair{font-size:25px}.history-delta{align-self:flex-end}}
