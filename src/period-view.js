@@ -88,7 +88,7 @@ function chart(bucketList,mode,metric){
   if(kind==='bars'){
     marks=`<div class="history-bars">${bucketList.map((bucket,index)=>{
       const value=values[index];
-      const role=index===bucketList.length-1?'current':index===firstDataIndex?'first':'past';
+      const role=index===bucketList.length-1?'current':'past';
       const side=index<=2?'tip-left':index>=7?'tip-right':'';
       if(value===null&&mode==='year')return '<span class="history-bar-slot no-history" aria-hidden="true"></span>';
       const tip=tooltip(bucket,mode,metric,value);
@@ -106,15 +106,15 @@ function chart(bucketList,mode,metric){
     }
     marks=`${line}${bucketList.map((bucket,index)=>{
       const point=points[index];if(!point)return '';
-      const role=index===bucketList.length-1?'current':index===firstDataIndex?'first':'past';
+      const role=index===bucketList.length-1?'current':'past';
       const side=index<=2?'tip-left':index>=7?'tip-right':'';
       const tip=tooltip(bucket,mode,metric,values[index]);
       return `<button type="button" class="history-point ${role}${bucket.partial?' partial':''} ${side}${point.y<30?' tip-below':''}" style="--x:${point.x}%;--y:${point.y}%" aria-label="${tip.label}">${tip.html}</button>`;
     }).join('')}`;
   }
-  const indices=mode==='year'?[0,firstDataIndex,bucketList.length-1]:[0,Math.floor((bucketList.length-1)/2),bucketList.length-1];
+  const indices=mode==='year'?[0,Math.max(firstDataIndex,0),bucketList.length-1]:[0,Math.floor((bucketList.length-1)/2),bucketList.length-1];
   const labels=`<div class="history-x ${mode==='year'?'year':''}" aria-hidden="true">${[...new Set(indices)].map(index=>`<span style="--x:${(index+.5)/bucketList.length*100}%">${axisLabel(bucketList[index],mode)}</span>`).join('')}</div>`;
-  const periodCount=mode==='year'?`${bucketList.length} лет, первые ${firstDataIndex} без записей`:mode==='month'?`${bucketList.length} месяцев`:mode==='week'?`${bucketList.length} недель`:`${bucketList.length} дней`;
+  const periodCount=mode==='year'?`${bucketList.length} лет, ${firstDataIndex<0?'записей нет':`первые ${firstDataIndex} без записей`}`:mode==='month'?`${bucketList.length} месяцев`:mode==='week'?`${bucketList.length} недель`:`${bucketList.length} дней`;
   const gap=mode==='year'&&firstDataIndex>0?`<span class="history-gap-note" style="--gap-width:${firstDataIndex/bucketList.length*100}%" aria-hidden="true">${bucketList[0].start.slice(0,4)}–${bucketList[firstDataIndex-1].start.slice(0,4)} нет записей</span>`:'';
   return `<div class="history-chart ${kind}" role="group" aria-label="${metricName[metric]}: история за ${periodCount}"><div class="history-visual">${yAxis}<div class="history-track">${guides}${gap}${marks}</div></div>${labels}</div>`;
 }
@@ -123,22 +123,22 @@ function macroDetails(first,last){
     const values=['protein','fat','carbs'].map(field=>number(macroMean(bucket.keys,field)));
     return `<div><span>${index?'Конец':'Начало'}</span><strong>${values.join(' · ')} г</strong></div>`;
   });
-  return `<details class="period-macros"><summary>Белки · жиры · углеводы</summary><div class="period-macro-head">Среднее за завершённый дневник</div>${rows.join('')}</details>`;
+  return `<details class="period-macros"><summary>Белки · жиры · углеводы</summary><div class="period-macro-head">Среднее по дням с записями</div>${rows.join('')}</details>`;
 }
 function card(buckets,mode,metric,symbol,tone,icon){
-  const first=mode==='year'?buckets.find(bucket=>bucket.keys.length):buckets[0],last=buckets.at(-1);
+  const first=mode==='year'?(buckets.find(bucket=>bucketValue(bucket,metric)!==null)??buckets[0]):buckets[0],last=buckets.at(-1);
   const oldValue=bucketValue(first,metric),newValue=bucketValue(last,metric);
   const oldMeasure=metric==='weight'?lastWeight(first.keys):null;
   const newMeasure=metric==='weight'?lastWeight(last.keys):null;
-  const note=metric==='nutrition'?' · по завершённым дневникам':'';
-  const change=newValue===null&&mode==='day'&&metric==='nutrition'?'Дневник не завершён':newValue===null&&mode==='day'&&metric==='weight'?'Нет замера':difference(metric,oldValue,newValue);
+  const note=metric==='nutrition'?' · по внесённым записям':'';
+  const change=newValue===null&&mode==='day'&&metric==='nutrition'?'Нет записи':newValue===null&&mode==='day'&&metric==='weight'?'Нет замера':difference(metric,oldValue,newValue);
   const pair=`<div class="history-comparison" role="group" aria-label="${bucketLabel(first,mode)} — ${bucketLabel(last,mode)}"><div class="history-pair"><span class="history-old">${valueText(metric,oldValue)}${oldMeasure?`<small>${shortDate(oldMeasure.date)}${mode==='year'?` ${oldMeasure.date.slice(0,4)}`:''}</small>`:''}</span><span class="history-arrow" aria-hidden="true">→</span><span class="history-new">${valueText(metric,newValue)}${newMeasure?`<small>${shortDate(newMeasure.date)}${mode==='year'?` ${newMeasure.date.slice(0,4)}`:''}</small>`:''}</span></div><strong class="history-delta">${change}</strong></div>`;
   const completed=metric==='nutrition'?last.keys.filter(key=>record(key)?.nutrition).length:0;
-  const caveat=metric==='nutrition'&&mode!=='day'&&completed>0&&completed<3?`<p class="trend-caveat">Среднее пока по ${completed===1?'одному дневнику':'двум дневникам'}.</p>`:'';
+  const caveat=metric==='nutrition'&&mode!=='day'&&completed>0&&completed<3?`<p class="trend-caveat">Среднее пока по ${completed===1?'одному дню':'двум дням'} с записями.</p>`:'';
   return `<article class="period-card trend-card ${metric}"><div class="period-card-head"><span class="icon-orb ${tone}">${icon(symbol,22)}</span><div><h2>${metricName[metric]}</h2><span class="trend-unit">${unitName[metric]}${note}</span></div></div>${chart(buckets,mode,metric)}${pair}${caveat}${metric==='nutrition'?macroDetails(first,last):''}</article>`;
 }
 export function renderPeriods(state,icon){
   const buckets=periodBuckets(state.mode,10);
   const modes={day:'День',week:'Неделя',month:'Месяц',year:'Год'};
-  return `<main class="page periods-page"><div class="content-shell"><section class="period-hero"><div><div class="eyebrow">ВЫМЫШЛЕННЫЕ ДАННЫЕ · ДИНАМИКА И НАБЛЮДЕНИЯ</div><h1>Периоды</h1></div></section><div class="period-controls"><div class="period-mode" role="group" aria-label="Масштаб сравнения">${Object.entries(modes).map(([key,name])=>`<button data-mode="${key}" class="${state.mode===key?'selected':''}" aria-pressed="${state.mode===key}">${name}</button>`).join('')}</div><span class="period-asof">Пример по ${dateText(today.date,{day:'numeric',month:'long',year:'numeric'})}</span></div><div class="period-card-grid">${card(buckets,state.mode,'sleep','moon','blue',icon)}${card(buckets,state.mode,'steps','walk','sage',icon)}${card(buckets,state.mode,'nutrition','food','coral',icon)}${card(buckets,state.mode,'weight','weight','lavender',icon)}</div><details class="period-method compact-method"><summary>Как считаются значения</summary><p>Числа под графиком сравнивают начало ряда с последним интервалом; пустые годы слева в расчёт не входят. Сон и шаги — среднее по дням с данными, питание — среднее по завершённым дневникам. Вес — последний замер в периоде. Полосатый столбец или пунктирная точка показывают неполный последний интервал; пропуски не считаются нулём. Нажми, коснись или перейди клавишей на точку графика, чтобы увидеть точное значение.</p></details></div></main>`;
+  return `<main class="page periods-page"><div class="content-shell"><section class="period-hero"><div><div class="eyebrow">ЛИЧНЫЕ ДАННЫЕ · ДИНАМИКА И НАБЛЮДЕНИЯ</div><h1>Периоды</h1></div></section><div class="period-controls"><div class="period-mode" role="group" aria-label="Масштаб сравнения">${Object.entries(modes).map(([key,name])=>`<button data-mode="${key}" class="${state.mode===key?'selected':''}" aria-pressed="${state.mode===key}">${name}</button>`).join('')}</div><span class="period-asof">Данные по ${dateText(today.date,{day:'numeric',month:'long',year:'numeric'})}</span></div><div class="period-card-grid">${card(buckets,state.mode,'sleep','moon','blue',icon)}${card(buckets,state.mode,'steps','walk','sage',icon)}${card(buckets,state.mode,'nutrition','food','coral',icon)}${card(buckets,state.mode,'weight','weight','lavender',icon)}</div><details class="period-method compact-method"><summary>Как считаются значения</summary><p>Числа под графиком сравнивают начало ряда с последним интервалом; пустые годы слева в расчёт не входят. Сон и шаги — среднее по дням с данными, питание — среднее по дням с записями. Вес — последний замер в периоде. Полосатый столбец или пунктирная точка показывают неполный последний интервал; пропуски не считаются нулём. Нажми, коснись или перейди клавишей на точку графика, чтобы увидеть точное значение.</p></details></div></main>`;
 }
