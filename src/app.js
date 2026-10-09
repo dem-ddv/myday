@@ -1,17 +1,17 @@
 import { today, minutesText, numberText } from './data.js';
 import { renderPeriods } from './period-view.js';
 import { periodWindow, mean } from './period-model.js';
-import { liveSleepPage, loadLiveSleep } from './live-sleep.js';
-import { authenticated } from './api-config.js';
+import { liveWellnessPage, loadLiveWellness } from './live-sleep.js';
+import { authenticated, onMyDay } from './api-config.js';
 
 const app = document.querySelector('#app');
-const state = { page: ['periods','sleep'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today', mode: 'week', detail: null };
+const state = { page: ['today','periods','sleep'].includes(location.hash.slice(1)) ? location.hash.slice(1) : onMyDay ? 'sleep' : 'today', mode: 'week', detail: null };
 let detailReturn = null;
 const dateFromISO = iso => new Date(`${iso}T12:00:00Z`);
 const formatDate = (iso, options={ day:'numeric', month:'long', year:'numeric' }) => new Intl.DateTimeFormat('ru-RU', { timeZone:'UTC', ...options }).format(dateFromISO(iso)).replace(/\sг\.$/, '');
 function moscowDate() { const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'Europe/Moscow', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date()).map(p=>[p.type,p.value])); return `${parts.year}-${parts.month}-${parts.day}`; }
 const isCurrentDay = () => today.date === moscowDate();
-const overviewLabel = () => isCurrentDay() ? 'Сегодня' : 'Обзор';
+const overviewLabel = () => 'Пример дня';
 const updatedLabel = time => `Обновлено ${isCurrentDay()?'сегодня':formatDate(today.date,{day:'numeric',month:'long'})}, ${time}`;
 const periodWeightDate = (period, index) => formatDate(`${period.key}-${String(index+1).padStart(2,'0')}`, { day:'numeric', month:'long' });
 const icon = (name, size=24) => {
@@ -36,14 +36,14 @@ const icon = (name, size=24) => {
 const leaf = `<svg class="botanical" viewBox="0 0 188 210" fill="none" aria-hidden="true"><circle cx="60" cy="87" r="54" fill="#F7D8CB" opacity=".75"/><path d="M105 205C98 145 113 83 121 25" stroke="#60745E" stroke-width="2.2"/><path d="M117 69C89 46 88 21 90 8c24 6 34 27 27 61ZM113 111c23-33 46-34 59-32-6 25-27 39-59 32ZM101 148c-33-24-60-18-72-11 16 22 39 29 72 11ZM112 90c-2-30 15-52 26-60 10 22 1 44-26 60ZM104 172c24-22 48-21 60-17-13 23-35 28-60 17Z" fill="#8EA188" stroke="#63765E" stroke-width="1.3"/><path d="M92 9c11 20 17 40 25 60M171 80c-22 10-38 19-58 31M29 137c26 4 51 7 72 11M137 30c-12 21-19 39-25 60M163 155c-22 4-39 10-59 17" stroke="#697E66" stroke-width="1"/></svg>`;
 
 function navItem(page, label, symbol) { return `<button class="nav-item ${state.page===page?'active':''}" data-page="${page}" aria-current="${state.page===page?'page':'false'}">${icon(symbol,22)}<span>${label}</span></button>`; }
-function header() { return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#today"><span class="brand-leaf">✦</span><span>мой день</span></a><nav class="desktop-nav" aria-label="Основная навигация">${navItem('today',overviewLabel(),'home')}${navItem('periods','Периоды','calendar')}${navItem('sleep','Мой сон','moon')}</nav></div></header>`; }
-function bottomNav() { return `<nav class="bottom-nav" aria-label="Основная навигация">${navItem('today',overviewLabel(),'home')}${navItem('periods','Периоды','calendar')}${navItem('sleep','Мой сон','moon')}</nav>`; }
+function header() { return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#sleep"><span class="brand-leaf">✦</span><span>мой день</span></a><nav class="desktop-nav" aria-label="Основная навигация">${navItem('sleep','Мои данные','moon')}${navItem('today',overviewLabel(),'home')}${navItem('periods','Периоды · пример','calendar')}</nav></div></header>`; }
+function bottomNav() { return `<nav class="bottom-nav" aria-label="Основная навигация">${navItem('sleep','Мои данные','moon')}${navItem('today',overviewLabel(),'home')}${navItem('periods','Периоды','calendar')}</nav>`; }
 function badge(text, tone='neutral') { return `<span class="badge ${tone}">${text}</span>`; }
 function progress(value, color) { return `<div class="progress"><span style="width:${Math.min(100,value)}%;background:${color}"></span></div>`; }
 
 function todayPage() {
   return `<main class="page today-page"><div class="content-shell">
-    <section class="hero"><div class="hero-copy"><div class="eyebrow">${formatDate(today.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase()}</div><h1>${overviewLabel()}</h1></div><div class="hero-art">${leaf}</div></section>
+    <section class="hero"><div class="hero-copy"><div class="eyebrow">ВЫМЫШЛЕННЫЕ ДАННЫЕ · ${formatDate(today.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase()}</div><h1>${overviewLabel()}</h1></div><div class="hero-art">${leaf}</div></section>
     <div class="today-layout"><div class="main-column"><div class="section-heading"><h2>Главное за день</h2></div>
       <div class="metric-grid">
         <button class="metric-card sleep-card" data-detail="sleep"><div class="card-top"><span class="icon-orb blue">${icon('moon',25)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Сон</h3><div class="metric-value">${minutesText(today.sleep.minutes)}</div><p class="metric-note">На ${today.sleep.targetMinutes-today.sleep.minutes} мин меньше ориентира ${minutesText(today.sleep.targetMinutes).replace(/ 0 м$/,'')}</p>${progress(today.sleep.minutes/today.sleep.targetMinutes*100,'#6683AC')}<div class="card-foot">${updatedLabel(today.sleep.updated)}</div></button>
@@ -66,11 +66,11 @@ function detailContent(name) { const week=periodWindow('week'); const blocks={
 
 export function render() {
   if (!authenticated) return;
-  app.innerHTML=`${header()}${state.page==='periods'?periodsPage():state.page==='sleep'?liveSleepPage():todayPage()}${bottomNav()}${state.detail?detailContent(state.detail):''}`;
+  app.innerHTML=`${header()}${state.page==='periods'?periodsPage():state.page==='sleep'?liveWellnessPage():todayPage()}${bottomNav()}${state.detail?detailContent(state.detail):''}`;
   document.body.classList.toggle('modal-open',!!state.detail);
   for(const element of app.querySelectorAll('.topbar, main, .bottom-nav')) element.toggleAttribute('inert',!!state.detail);
   if(state.detail) app.querySelector('.modal-close')?.focus();
-  if(state.page==='sleep') loadLiveSleep(app.querySelector('#sleep-date').value);
+  if(state.page==='sleep') loadLiveWellness(app.querySelector('#sleep-date').value);
 }
 function closeDetail() {
   const returnTo=detailReturn;
@@ -87,7 +87,7 @@ app.addEventListener('click', e=>{
   const mode=e.target.closest('[data-mode]');
   if(mode){state.mode=mode.dataset.mode;render();return;}
 });
-app.addEventListener('change', e=>{if(e.target.id==='sleep-date') loadLiveSleep(e.target.value);});
+app.addEventListener('change', e=>{if(e.target.id==='sleep-date') loadLiveWellness(e.target.value);});
 window.addEventListener('hashchange',()=>{const page=location.hash.slice(1);if(['today','periods','sleep'].includes(page)&&page!==state.page){state.page=page;state.detail=null;render();}});
 window.addEventListener('keydown',e=>{
   if(!state.detail) return;
