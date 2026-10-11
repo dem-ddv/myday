@@ -1,5 +1,5 @@
 // Personal observations arrive only from the authenticated dashboard API.
-export const today = { date: '', sleep: null, steps: null, hrv: null, restingPulse: null, nutrition: null, energy: null, weight: null, updatedAt: '' };
+export const today = { date: '', calendarToday: '', sleep: null, steps: null, hrv: null, restingPulse: null, nutrition: null, energy: null, weight: null, updatedAt: '' };
 export let days = [];
 
 export function moscowDate(now = new Date()) {
@@ -9,11 +9,19 @@ export function moscowDate(now = new Date()) {
 
 export function setDashboard(payload, now = new Date()) {
   days = Array.isArray(payload.days) ? payload.days : [];
-  today.date = moscowDate(now);
-  const row = days.find(day => day.date === today.date) ?? {};
-  for (const field of ['sleep', 'steps', 'hrv', 'restingPulse', 'nutrition', 'energy']) today[field] = row[field] ?? null;
-  today.weight = [...days].reverse().find(day => day.date <= today.date && day.weight)?.weight ?? null;
+  const previousCalendarToday = today.calendarToday;
+  today.calendarToday = moscowDate(now);
+  selectDay(previousCalendarToday === today.calendarToday && today.date <= today.calendarToday ? today.date : today.calendarToday);
   today.updatedAt = payload.updatedAt ?? '';
+}
+
+export function selectDay(key) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || key > today.calendarToday || Number.isNaN(Date.parse(`${key}T12:00:00Z`))) return false;
+  today.date = key;
+  const row = days.find(day => day.date === key) ?? {};
+  for (const field of ['sleep', 'steps', 'hrv', 'restingPulse', 'nutrition', 'energy']) today[field] = row[field] ?? null;
+  today.weight = days.filter(day => day.date <= key && day.weight).sort((a,b) => b.date.localeCompare(a.date))[0]?.weight ?? null;
+  return true;
 }
 
 export function average(values) { const valid = values.filter(Number.isFinite); return valid.length ? valid.reduce((a,b) => a+b, 0) / valid.length : null; }

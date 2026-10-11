@@ -1,5 +1,5 @@
-import { today, minutesText, numberText } from './data.js?v=c9c1c733f76b';
-import { renderPeriods } from './period-view.js?v=6c4623906fff';
+import { today, days, selectDay, minutesText, numberText } from './data.js?v=1b85eb6ad1fa';
+import { renderPeriods } from './period-view.js?v=bb2d21d0b81e';
 import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=d66495dd037c';
 import { authenticated, onMyDay } from './api-config.js?v=d34637085ebe';
 
@@ -10,7 +10,7 @@ const dateFromISO = iso => new Date(`${iso}T12:00:00Z`);
 const formatDate = (iso, options={ day:'numeric', month:'long', year:'numeric' }) => new Intl.DateTimeFormat('ru-RU', { timeZone:'UTC', ...options }).format(dateFromISO(iso)).replace(/\sг\.$/, '');
 function moscowDate() { const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'Europe/Moscow', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date()).map(p=>[p.type,p.value])); return `${parts.year}-${parts.month}-${parts.day}`; }
 const overviewLabel = () => 'День';
-const updatedLabel = () => today.updatedAt ? `Последнее обновление базы: ${new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(today.updatedAt))}` : 'Время обновления неизвестно';
+const updatedLabel = () => today.updatedAt ? `Данные обновлены ${new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(today.updatedAt))}` : 'Время обновления неизвестно';
 const icon = (name, size=24) => {
   const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
   const paths = {
@@ -39,22 +39,24 @@ function badge(text, tone='neutral') { return `<span class="badge ${tone}">${tex
 function progress(value, color) { return `<div class="progress"><span style="width:${Math.min(100,value)}%;background:${color}"></span></div>`; }
 
 function todayPage() {
-  const missing = 'Нет записи';
   const nutrition = today.nutrition;
   const energy = today.energy;
   const weight = today.weight;
-  const day = formatDate(today.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const note = 'Источник: Garmin через Intervals.icu · FatSecret · Withings. Питание отражает внесённые записи, полнота дневника неизвестна.';
+  const isCurrent = today.date === today.calendarToday;
+  const earliest = days.length ? [...days].map(day=>day.date).sort()[0] : today.calendarToday;
+  const previous = new Date(Date.parse(`${today.date}T12:00:00Z`)-86400000).toISOString().slice(0,10);
+  const next = new Date(Date.parse(`${today.date}T12:00:00Z`)+86400000).toISOString().slice(0,10);
+  const calories = Number.isFinite(nutrition?.calories) ? nutrition.calories : null;
+  const caloriePercent = calories === null ? null : Math.min(100,Math.round(calories/2300*100));
   return `<main class="page today-page"><div class="content-shell">
-    <section class="hero"><div class="hero-copy"><div class="eyebrow">ЛИЧНЫЕ ДАННЫЕ · ${day.toUpperCase()}</div><h1>День</h1><p>${updatedLabel()}</p></div><div class="hero-art">${leaf}</div></section>
-    <div class="today-layout"><div class="main-column"><div class="section-heading"><h2>Главное за день</h2></div>
-      <div class="metric-grid">
-        <button class="metric-card sleep-card" data-detail="sleep"><div class="card-top"><span class="icon-orb blue">${icon('moon',25)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Сон</h3><div class="metric-value">${minutesText(today.sleep)}</div><p class="metric-note">${today.hrv == null ? 'Нет записи вариабельности пульса' : `Вариабельность пульса: ${numberText(today.hrv)} мс`}</p><div class="card-foot">Garmin</div></button>
-        <button class="metric-card move-card" data-detail="movement"><div class="card-top"><span class="icon-orb sage">${icon('walk',27)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Шаги</h3><div class="metric-value">${numberText(today.steps)}</div><p class="metric-note">За выбранный день</p><div class="card-foot">Garmin</div></button>
-        <button class="metric-card food-card" data-detail="nutrition"><div class="card-top"><span class="icon-orb coral">${icon('food',25)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Питание</h3><div class="metric-value">${nutrition ? `${numberText(nutrition.calories)} <small>ккал</small>` : missing}</div><p class="metric-note">${nutrition ? `${nutrition.entries} записей в дневнике` : 'Дневник не получен'}</p><div class="card-status">${badge('По внесённым записям','warm')}</div><div class="card-foot">FatSecret</div></button>
-      </div>
-      <button class="wide-card energy-card" data-detail="energy"><div><span class="overline">ОЦЕНКА РАСХОДА ЗА ${formatDate(today.date,{day:'numeric',month:'long'}).toUpperCase()}</span><h3>${energy ? `≈ ${numberText(energy.total)} <small>ккал</small>` : missing}</h3><p>${energy ? 'По весу, шагам и активности. Как рассчитано →' : 'Расчёт за сегодня появится после завершения дня'}</p></div><span class="energy-mark">≈</span></button>
-    </div><aside class="side-column"><div class="weight-summary"><span class="icon-orb lavender">${icon('weight',22)}</span><span class="weight-summary-copy"><span class="overline">ПОСЛЕДНИЙ ВЕС</span><strong>${weight ? `${weight.kg.toFixed(1).replace('.',',')} кг` : missing}</strong><span>${weight ? `Измерено ${formatDate(weight.measuredAt.slice(0,10),{day:'numeric',month:'long'})}` : 'Замер не получен'}</span></span></div><section class="focus-card"><span class="overline">О ДАННЫХ</span><h2>Что показано</h2><p>${note}</p></section></aside></div>
+    <section class="day-head"><div><h1>День</h1><div class="day-date">${formatDate(today.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}${isCurrent?'<span class="today-chip">Сегодня</span>':''}</div></div><div class="day-switch" aria-label="Выбор дня"><button type="button" data-day="${previous}" aria-label="Предыдущий день" ${previous<earliest?'disabled':''}>${icon('left',19)}</button><input id="day-picker" type="date" value="${today.date}" min="${earliest}" max="${today.calendarToday}" aria-label="Выбрать день"><button type="button" data-day="${next}" aria-label="Следующий день" ${next>today.calendarToday?'disabled':''}>${icon('chevron',19)}</button></div></section>
+    <div class="day-grid" aria-label="Показатели за ${formatDate(today.date)}">
+      <button class="day-card sleep-card" data-detail="sleep"><span class="day-card-icon blue">${icon('moon',22)}</span><span class="day-card-title">Сон</span><strong class="day-card-value">${Number.isFinite(today.sleep)?minutesText(today.sleep):'—'}</strong><span class="day-card-note">${today.hrv == null ? 'Данных о HRV нет' : `HRV ${numberText(today.hrv)} мс`}</span></button>
+      <button class="day-card move-card" data-detail="movement"><span class="day-card-icon sage">${icon('walk',23)}</span><span class="day-card-title">Шаги</span><strong class="day-card-value">${Number.isFinite(today.steps)?numberText(today.steps):'—'}</strong><span class="day-card-note">Вне тренировок<br>Цель с ними — 10&nbsp;400</span></button>
+      <button class="day-card food-card" data-detail="nutrition"><span class="day-card-icon coral">${icon('food',22)}</span><span class="day-card-title">Съедено</span><strong class="day-card-value">${calories===null?'—':numberText(calories)} <small>ккал</small></strong><span class="day-card-note">${calories===null?'Нет данных дневника':`Из 2300 · по внесённым записям`}</span>${caloriePercent===null?'':`<span class="day-card-bar" role="progressbar" aria-valuenow="${Math.round(calories)}" aria-valuemin="0" aria-valuemax="2300" aria-label="Внесённые калории из 2300"><i style="width:${caloriePercent}%"></i></span>`}</button>
+      <button class="day-card burn-card" data-detail="energy"><span class="day-card-icon green">${icon('sun',22)}</span><span class="day-card-title">Потрачено</span><strong class="day-card-value">${energy?`≈ ${numberText(energy.total)} <small>ккал</small>`:'—'}</strong><span class="day-card-note">${energy?'Оценка за завершённый день':isCurrent?'Оценим после завершения дня':'Оценки за день нет'}</span></button>
+    </div>
+    <div class="day-meta"><span>${weight?`Вес ${weight.kg.toFixed(1).replace('.',',')} кг · замер ${formatDate(weight.measuredAt.slice(0,10),{day:'numeric',month:'short'})}`:'Данных о весе пока нет'}</span><span>${updatedLabel()}</span></div>
   </div></main>`;
 }
 
@@ -63,8 +65,8 @@ function periodsPage() { return renderPeriods(state, icon); }
 function detailContent(name) {
   const blocks = {
     sleep: { title:'Сон',symbol:'moon',tone:'blue',value:minutesText(today.sleep),description:'Ночной сон по записи Garmin.',rows:[['Вариабельность пульса',today.hrv == null ? 'Нет записи' : `${numberText(today.hrv)} мс`],['Пульс покоя',today.restingPulse == null ? 'Нет записи' : `${numberText(today.restingPulse)} уд/мин`]],source:'Garmin через Intervals.icu' },
-    movement: { title:'Шаги',symbol:'walk',tone:'sage',value:numberText(today.steps),description:'Дневное число шагов по Garmin.',rows:[],source:'Garmin через Intervals.icu' },
-    nutrition: { title:'Питание',symbol:'food',tone:'coral',value:today.nutrition ? `${numberText(today.nutrition.calories)} ккал` : 'Нет записи',description:'Сумма внесённых продуктов. Полнота дневника неизвестна.',rows:today.nutrition ? [['Белки',`${numberText(today.nutrition.protein)} г`],['Жиры',`${numberText(today.nutrition.fat)} г`],['Углеводы',`${numberText(today.nutrition.carbs)} г`],['Записей',numberText(today.nutrition.entries)]] : [],source:'FatSecret' },
+    movement: { title:'Шаги',symbol:'walk',tone:'sage',value:numberText(today.steps),description:'Шаги вне тренировок. Цель 10 400 относится к общему числу шагов вместе с тренировками, поэтому прогресс по этой записи не рассчитываем.',rows:[],source:'Garmin через Intervals.icu' },
+    nutrition: { title:'Съедено',symbol:'food',tone:'coral',value:today.nutrition ? `${numberText(today.nutrition.calories)} ккал` : 'Нет записи',description:'Ориентир — 2300 ккал в день. Показаны только внесённые продукты; полнота дневника неизвестна.',rows:today.nutrition ? [['Белки',`${numberText(today.nutrition.protein)} г`],['Жиры',`${numberText(today.nutrition.fat)} г`],['Углеводы',`${numberText(today.nutrition.carbs)} г`],['Записей',numberText(today.nutrition.entries)]] : [],source:'FatSecret' },
     energy: { title:'Оценка расхода',symbol:'info',tone:'sage',value:today.energy ? `≈ ${numberText(today.energy.total)} ккал` : 'Нет оценки',description:'Расчёт по весу, шагам и активности; значение не измерено прибором.',rows:today.energy ? [['Основной обмен',`${numberText(today.energy.resting)} ккал`],['Фоновая активность',`${numberText(today.energy.background)} ккал`],['Тренировки',`${numberText(today.energy.workout)} ккал`],['Ходьба',`${numberText(today.energy.walking)} ккал`]] : [],source:'Расчёт по Garmin и Withings' },
   };
   const d=blocks[name];
@@ -88,13 +90,15 @@ function closeDetail() {
 app.addEventListener('click', e=>{
   const page=e.target.closest('[data-page]');
   if(page){state.page=page.dataset.page;state.detail=null;location.hash=state.page;window.scrollTo(0,0);render();return;}
+  const day=e.target.closest('[data-day]');
+  if(day && !day.disabled && selectDay(day.dataset.day)){state.page='today';state.detail=null;location.hash='today';window.scrollTo(0,0);render();return;}
   const detail=e.target.closest('[data-detail]');
   if(detail){detailReturn=detail.dataset.detail;state.detail=detail.dataset.detail;render();return;}
   if(e.target.matches('.modal-backdrop')||e.target.closest('.modal-close')){closeDetail();return;}
   const mode=e.target.closest('[data-mode]');
   if(mode){state.mode=mode.dataset.mode;render();return;}
 });
-app.addEventListener('change', e=>{if(e.target.id==='sleep-date') loadLiveWellness(e.target.value);});
+app.addEventListener('change', e=>{if(e.target.id==='sleep-date') loadLiveWellness(e.target.value);if(e.target.id==='day-picker'&&selectDay(e.target.value))render();});
 window.addEventListener('hashchange',()=>{const page=location.hash.slice(1);if(['today','periods','sleep'].includes(page)&&page!==state.page){state.page=page;state.detail=null;render();}});
 window.addEventListener('keydown',e=>{
   if(!state.detail) return;
