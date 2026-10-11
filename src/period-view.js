@@ -1,4 +1,4 @@
-import { today, days, numberText } from './data.js?v=1b85eb6ad1fa';
+import { today, days, numberText } from './data.js?v=e52f69a147ee';
 import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js?v=88b7a5a9d64a';
 
 const dateText=(key,options={day:'numeric',month:'short'})=>new Intl.DateTimeFormat('ru-RU',{timeZone:'UTC',...options}).format(new Date(`${key}T12:00:00Z`));
@@ -103,11 +103,12 @@ function chart(bucketList,mode,metric){
   }else{
     const points=values.map((value,index)=>value===null?null:{x:(index+.5)/values.length*100,y:(scale.max-value)/(scale.max-scale.min)*100});
     let line='';
-    if(kind==='line'){
+    if(kind==='line'||kind==='dots'){
       const segments=[];let current=[];
       for(const point of points){if(point)current.push(`${point.x},${point.y}`);else if(current.length){segments.push(current);current=[];}}
       if(current.length)segments.push(current);
-      line=`<svg class="history-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${segments.filter(segment=>segment.length>1).map(segment=>`<polyline points="${segment.join(' ')}"/>`).join('')}</svg>`;
+      const drawn=kind==='dots'?points.filter(Boolean).map(point=>`${point.x},${point.y}`):segments.filter(segment=>segment.length>1).map(segment=>segment.join(' '));
+      line=`<svg class="history-line ${kind==='dots'?'weight-line':''}" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${kind==='dots'&&drawn.length>1?`<polyline points="${drawn.join(' ')}"/>`:kind==='line'?drawn.map(segment=>`<polyline points="${segment}"/>`).join(''):''}</svg>`;
     }
     marks=`${line}${bucketList.map((bucket,index)=>{
       const point=points[index];if(!point)return '';
@@ -135,17 +136,14 @@ function card(buckets,mode,metric,symbol,tone,icon){
   const first=observed[0]??buckets[0],last=observed.at(-1)??buckets.at(-1);
   const oldValue=bucketValue(first,metric),newValue=bucketValue(last,metric);
   const firstCount=first.keys.filter(key=>metric==='weight'?Number.isFinite(record(key)?.weight?.kg):metric==='nutrition'?Number.isFinite(record(key)?.nutrition?.calories):Number.isFinite(record(key)?.[metric])).length;
-  const note=metric==='nutrition'?' · по внесённым записям':'';
   const change=observed.length<2||mode==='year'&&metric!=='weight'&&firstCount<7?'Недостаточно данных':difference(metric,oldValue,newValue);
   const pair=observed.length<2?`<div class="history-comparison"><span class="history-change-label">Для сравнения нужно два периода с данными</span></div>`:`<div class="history-comparison" role="group" aria-label="Изменение между ${bucketLabel(first,mode)} и ${bucketLabel(last,mode)}"><span class="history-change-label">По первым и последним данным</span><strong class="history-delta">${change}</strong></div>`;
   const completed=metric==='nutrition'?last.keys.filter(key=>record(key)?.nutrition).length:0;
   const caveat=mode==='year'&&metric!=='weight'&&firstCount>0&&firstCount<7?`<p class="trend-caveat">${first.start.slice(0,4)}: только ${firstCount} ${firstCount===1?'день':firstCount<5?'дня':'дней'} с записями.</p>`:metric==='nutrition'&&mode!=='day'&&completed>0&&completed<3?`<p class="trend-caveat">Среднее пока по ${completed===1?'одному дню':'двум дням'} с записями.</p>`:'';
-  return `<article class="period-card trend-card ${metric}"><div class="period-card-head"><span class="icon-orb ${tone}">${icon(symbol,22)}</span><div><h2>${metricName[metric]}</h2><span class="trend-unit">${unitName[metric]}${note}</span></div></div>${chart(buckets,mode,metric)}${pair}${caveat}${metric==='nutrition'?macroDetails(first,last):''}</article>`;
+  return `<article class="period-card trend-card ${metric}"><div class="period-card-head"><span class="icon-orb ${tone}">${icon(symbol,22)}</span><div><h2>${metricName[metric]}</h2><span class="trend-unit">${unitName[metric]}</span></div></div>${chart(buckets,mode,metric)}${pair}${caveat}${metric==='nutrition'?macroDetails(first,last):''}</article>`;
 }
 export function renderPeriods(state,icon){
-  const firstYear=days.length?Math.min(...days.map(day=>Number(day.date.slice(0,4)))):Number(today.calendarToday.slice(0,4));
-  const yearCount=Math.min(10,Math.max(2,Number(today.calendarToday.slice(0,4))-firstYear+1));
-  const buckets=periodBuckets(state.mode,state.mode==='year'?yearCount:10);
+  const buckets=periodBuckets(state.mode,10);
   const modes={day:'По дням',week:'По неделям',month:'По месяцам',year:'По годам'};
   return `<main class="page periods-page"><div class="content-shell"><section class="period-hero"><div><h1>Периоды</h1></div></section><div class="period-controls"><div class="period-mode" role="group" aria-label="Масштаб сравнения">${Object.entries(modes).map(([key,name])=>`<button data-mode="${key}" class="${state.mode===key?'selected':''}" aria-pressed="${state.mode===key}">${name}</button>`).join('')}</div><span class="period-asof">На ${dateText(today.calendarToday,{day:'numeric',month:'long',year:'numeric'})}</span></div><div class="period-card-grid">${card(buckets,state.mode,'sleep','moon','blue',icon)}${card(buckets,state.mode,'steps','walk','sage',icon)}${card(buckets,state.mode,'nutrition','food','coral',icon)}${card(buckets,state.mode,'weight','weight','lavender',icon)}</div><details class="period-method compact-method"><summary>Как считаются значения</summary><p>Сон и шаги — среднее по дням с данными, питание — по дням с записями. Шаги здесь без тренировок. Вес — последний замер в периоде. Изменение сравнивает первые и последние доступные значения на графике. Пропуски не считаются нулём. Пунктир и штриховка отмечают незавершённый интервал. В режиме «По дням» коснись точки или столбца, чтобы открыть этот день.</p></details></div></main>`;
 }

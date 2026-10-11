@@ -36,7 +36,7 @@ async function loadDashboard() {
   if (onMyDay && response.status === 403) { window.dispatchEvent(new Event('myday:session-expired')); throw new Error('session_expired'); }
   if (!response.ok) throw new Error('data_unavailable');
   const payload = await response.json();
-  const { setDashboard } = await import('./data.js?v=1b85eb6ad1fa');
+  const { setDashboard } = await import('./data.js?v=e52f69a147ee');
   setDashboard(payload);
   loaded = true;
   if (dashboardModule) dashboardModule.render();
@@ -47,7 +47,7 @@ async function showDashboard() {
   app.innerHTML = '<main class="pin-page"><p class="pin-loading" role="status">Загружаем личные данные…</p></main>';
   try {
     await loadDashboard();
-    if (!dashboardModule) dashboardModule = await import('./app.js?v=447a0e16b807');
+    if (!dashboardModule) dashboardModule = await import('./app.js?v=a995aa977492');
     else dashboardModule.render();
   }
   catch (error) {
