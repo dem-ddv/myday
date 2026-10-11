@@ -2,12 +2,14 @@
 export const today = { date: '', sleep: null, steps: null, hrv: null, restingPulse: null, nutrition: null, energy: null, weight: null, updatedAt: '' };
 export let days = [];
 
-export function setDashboard(payload) {
+export function moscowDate(now = new Date()) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now).map(part => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+export function setDashboard(payload, now = new Date()) {
   days = Array.isArray(payload.days) ? payload.days : [];
-  const moscowDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
-  const yesterday = new Date(`${moscowDate}T12:00:00Z`);
-  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-  today.date = yesterday.toISOString().slice(0, 10);
+  today.date = moscowDate(now);
   const row = days.find(day => day.date === today.date) ?? {};
   for (const field of ['sleep', 'steps', 'hrv', 'restingPulse', 'nutrition', 'energy']) today[field] = row[field] ?? null;
   today.weight = [...days].reverse().find(day => day.date <= today.date && day.weight)?.weight ?? null;

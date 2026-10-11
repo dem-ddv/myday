@@ -1,4 +1,4 @@
-import { today, days, average } from './data.js?v=f0cd85731739';
+import { today, days, average } from './data.js?v=a7f0f0abec52';
 
 const DAY = 86400000;
 const iso = date => date.toISOString().slice(0,10);
@@ -18,7 +18,7 @@ export function periodWindow(mode) {
 export function periodBuckets(mode,count=10) {
   const starts=[currentStart(mode)];
   while(starts.length<count) starts.push(previousStart(starts.at(-1),mode));
-  return starts.reverse().map(start => { const end=periodEnd(start,mode),observedEnd=end<today.date?end:today.date; return { start,end,observedEnd,partial:end>today.date,keys:start<=observedEnd?span(start,observedEnd):[] }; });
+  return starts.reverse().map(start => { const end=periodEnd(start,mode),observedEnd=end<today.date?end:today.date; return { start,end,observedEnd,partial:end>=today.date,keys:start<=observedEnd?span(start,observedEnd):[] }; });
 }
 export function record(key) { return records().get(key) ?? null; }
 export function values(keys,metric) { const data=records(); return keys.map(key => metric==='nutrition'?data.get(key)?.nutrition?.calories??null:data.get(key)?.[metric]??null); }

@@ -1,7 +1,7 @@
-import { today, minutesText, numberText } from './data.js?v=f0cd85731739';
-import { renderPeriods } from './period-view.js?v=f0cd85731739';
-import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=f0cd85731739';
-import { authenticated, onMyDay } from './api-config.js?v=f0cd85731739';
+import { today, minutesText, numberText } from './data.js?v=a7f0f0abec52';
+import { renderPeriods } from './period-view.js?v=a7f0f0abec52';
+import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=a7f0f0abec52';
+import { authenticated, onMyDay } from './api-config.js?v=a7f0f0abec52';
 
 const app = document.querySelector('#app');
 const state = { page: ['today','periods','sleep'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today', mode: 'week', detail: null };
@@ -10,7 +10,7 @@ const dateFromISO = iso => new Date(`${iso}T12:00:00Z`);
 const formatDate = (iso, options={ day:'numeric', month:'long', year:'numeric' }) => new Intl.DateTimeFormat('ru-RU', { timeZone:'UTC', ...options }).format(dateFromISO(iso)).replace(/\sг\.$/, '');
 function moscowDate() { const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'Europe/Moscow', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date()).map(p=>[p.type,p.value])); return `${parts.year}-${parts.month}-${parts.day}`; }
 const overviewLabel = () => 'День';
-const updatedLabel = () => today.updatedAt ? `Снимок данных: ${new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(today.updatedAt))}` : 'Время обновления неизвестно';
+const updatedLabel = () => today.updatedAt ? `Последнее обновление базы: ${new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(today.updatedAt))}` : 'Время обновления неизвестно';
 const icon = (name, size=24) => {
   const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
   const paths = {
@@ -53,7 +53,7 @@ function todayPage() {
         <button class="metric-card move-card" data-detail="movement"><div class="card-top"><span class="icon-orb sage">${icon('walk',27)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Шаги</h3><div class="metric-value">${numberText(today.steps)}</div><p class="metric-note">За выбранный день</p><div class="card-foot">Garmin</div></button>
         <button class="metric-card food-card" data-detail="nutrition"><div class="card-top"><span class="icon-orb coral">${icon('food',25)}</span><span class="card-arrow">${icon('chevron',22)}</span></div><h3>Питание</h3><div class="metric-value">${nutrition ? `${numberText(nutrition.calories)} <small>ккал</small>` : missing}</div><p class="metric-note">${nutrition ? `${nutrition.entries} записей в дневнике` : 'Дневник не получен'}</p><div class="card-status">${badge('По внесённым записям','warm')}</div><div class="card-foot">FatSecret</div></button>
       </div>
-      <button class="wide-card energy-card" data-detail="energy"><div><span class="overline">ОЦЕНКА РАСХОДА ЗА ${formatDate(today.date,{day:'numeric',month:'long'}).toUpperCase()}</span><h3>${energy ? `≈ ${numberText(energy.total)} <small>ккал</small>` : missing}</h3><p>${energy ? 'По весу, шагам и активности. Как рассчитано →' : 'Оценка пока недоступна'}</p></div><span class="energy-mark">≈</span></button>
+      <button class="wide-card energy-card" data-detail="energy"><div><span class="overline">ОЦЕНКА РАСХОДА ЗА ${formatDate(today.date,{day:'numeric',month:'long'}).toUpperCase()}</span><h3>${energy ? `≈ ${numberText(energy.total)} <small>ккал</small>` : missing}</h3><p>${energy ? 'По весу, шагам и активности. Как рассчитано →' : 'Расчёт за сегодня появится после завершения дня'}</p></div><span class="energy-mark">≈</span></button>
     </div><aside class="side-column"><div class="weight-summary"><span class="icon-orb lavender">${icon('weight',22)}</span><span class="weight-summary-copy"><span class="overline">ПОСЛЕДНИЙ ВЕС</span><strong>${weight ? `${weight.kg.toFixed(1).replace('.',',')} кг` : missing}</strong><span>${weight ? `Измерено ${formatDate(weight.measuredAt.slice(0,10),{day:'numeric',month:'long'})}` : 'Замер не получен'}</span></span></div><section class="focus-card"><span class="overline">О ДАННЫХ</span><h2>Что показано</h2><p>${note}</p></section></aside></div>
   </div></main>`;
 }

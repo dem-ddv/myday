@@ -1,4 +1,4 @@
-import { apiBase, onMyDay, setAuthenticated } from './api-config.js?v=f0cd85731739';
+import { apiBase, onMyDay, setAuthenticated } from './api-config.js?v=a7f0f0abec52';
 
 const app = document.querySelector('#app');
 let dashboardModule;
@@ -9,7 +9,7 @@ async function loadDashboard() {
   if (onMyDay && response.status === 403) { window.dispatchEvent(new Event('myday:session-expired')); throw new Error('session_expired'); }
   if (!response.ok) throw new Error('data_unavailable');
   const payload = await response.json();
-  const { setDashboard } = await import('./data.js?v=f0cd85731739');
+  const { setDashboard } = await import('./data.js?v=a7f0f0abec52');
   setDashboard(payload);
   loaded = true;
   if (dashboardModule) dashboardModule.render();
@@ -25,7 +25,7 @@ async function showDashboard() {
     app.querySelector('#retry-dashboard').addEventListener('click', showDashboard);
     return;
   }
-  if (!dashboardModule) dashboardModule = await import('./app.js?v=f0cd85731739');
+  if (!dashboardModule) dashboardModule = await import('./app.js?v=a7f0f0abec52');
   else dashboardModule.render();
 }
 
