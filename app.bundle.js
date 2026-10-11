@@ -602,7 +602,18 @@ async function dashboardResponse(response, { isProtected, onSessionExpired }) {
   return response.json();
 }
 
+// dashboard/dist/src/pwa.js?v=c1ea3f5be5fc
+function registerPwa(win = window, nav = navigator) {
+  if (!win.isSecureContext || !nav.serviceWorker) return;
+  const register = () => {
+    nav.serviceWorker.register("./sw.js", { scope: "./", updateViaCache: "none" }).then(() => console.info("My Day: web app service worker registered")).catch(() => console.warn("My Day: web app registration unavailable; browser mode still works"));
+  };
+  if (win.document.readyState === "complete") register();
+  else win.addEventListener("load", register, { once: true });
+}
+
 // dashboard/dist/src/boot.js
+registerPwa();
 var app2 = document.querySelector("#app");
 var dashboardModule;
 var loaded = false;
