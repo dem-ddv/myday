@@ -1,7 +1,7 @@
-import { today, minutesText, numberText } from './data.js?v=a7f0f0abec52';
-import { renderPeriods } from './period-view.js?v=a7f0f0abec52';
-import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=a7f0f0abec52';
-import { authenticated, onMyDay } from './api-config.js?v=a7f0f0abec52';
+import { today, minutesText, numberText } from './data.js?v=60a4c86059a5';
+import { renderPeriods } from './period-view.js?v=60a4c86059a5';
+import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=60a4c86059a5';
+import { authenticated, onMyDay } from './api-config.js?v=60a4c86059a5';
 
 const app = document.querySelector('#app');
 const state = { page: ['today','periods','sleep'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today', mode: 'week', detail: null };

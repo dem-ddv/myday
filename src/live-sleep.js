@@ -1,4 +1,4 @@
-import { apiBase, onMyDay } from './api-config.js?v=a7f0f0abec52';
+import { apiBase, onMyDay } from './api-config.js?v=60a4c86059a5';
 
 const dateText = iso => new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`)).replace(/\sг\.$/, '');
 const moscowDate = () => { const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).map(p => [p.type, p.value])); return `${parts.year}-${parts.month}-${parts.day}`; };
