@@ -1,4 +1,4 @@
-import { apiBase, onMyDay, setAuthenticated } from './api-config.js?v=60a4c86059a5';
+import { apiBase, onMyDay, setAuthenticated } from './api-config.js?v=d34637085ebe';
 
 const app = document.querySelector('#app');
 let dashboardModule;
@@ -36,7 +36,7 @@ async function loadDashboard() {
   if (onMyDay && response.status === 403) { window.dispatchEvent(new Event('myday:session-expired')); throw new Error('session_expired'); }
   if (!response.ok) throw new Error('data_unavailable');
   const payload = await response.json();
-  const { setDashboard } = await import('./data.js?v=60a4c86059a5');
+  const { setDashboard } = await import('./data.js?v=c9c1c733f76b');
   setDashboard(payload);
   loaded = true;
   if (dashboardModule) dashboardModule.render();
@@ -45,15 +45,17 @@ async function loadDashboard() {
 async function showDashboard() {
   setAuthenticated(true);
   app.innerHTML = '<main class="pin-page"><p class="pin-loading" role="status">Загружаем личные данные…</p></main>';
-  try { await loadDashboard(); }
+  try {
+    await loadDashboard();
+    if (!dashboardModule) dashboardModule = await import('./app.js?v=006be70f47fe');
+    else dashboardModule.render();
+  }
   catch (error) {
     if (error.message === 'session_expired') return;
     app.innerHTML = '<main class="pin-page"><section class="pin-card"><h1>Данные пока недоступны</h1><p>Не удалось получить записи. Проверь соединение и попробуй ещё раз.</p><button type="button" id="retry-dashboard">Повторить</button></section></main>';
     app.querySelector('#retry-dashboard').addEventListener('click', showDashboard);
     return;
   }
-  if (!dashboardModule) dashboardModule = await import('./app.js?v=60a4c86059a5');
-  else dashboardModule.render();
 }
 
 function showLogin(message = '') {
