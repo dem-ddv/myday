@@ -572,17 +572,42 @@ var init_app = __esm({
 
 // dashboard/dist/src/boot.js
 init_api_config();
+
+// dashboard/dist/src/api-request.js?v=c6956226768a
+async function requestWithDeadline(url, options = {}, readResponse = (response) => response, { timeoutMs = 12e3, fetchImpl = fetch } = {}) {
+  const controller = new AbortController();
+  let timer;
+  const deadline = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      const error = new DOMException("Request timed out", "TimeoutError");
+      reject(error);
+      controller.abort(error);
+    }, timeoutMs);
+  });
+  try {
+    return await Promise.race([
+      Promise.resolve().then(() => fetchImpl(url, { ...options, signal: controller.signal })).then(readResponse),
+      deadline
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+async function dashboardResponse(response, { isProtected, onSessionExpired }) {
+  if (isProtected && response.status === 403) {
+    onSessionExpired();
+    throw new Error("session_expired");
+  }
+  if (!response.ok) throw new Error("data_unavailable");
+  return response.json();
+}
+
+// dashboard/dist/src/boot.js
 var app2 = document.querySelector("#app");
 var dashboardModule;
 var loaded = false;
-async function fetchApi(path, options = {}) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12e3);
-  try {
-    return await fetch(`${apiBase}${path}`, { ...options, signal: controller.signal });
-  } finally {
-    clearTimeout(timeout);
-  }
+async function fetchApi(path, options = {}, readResponse) {
+  return requestWithDeadline(`${apiBase}${path}`, options, readResponse);
 }
 function showConnectionError() {
   setAuthenticated(false);
@@ -600,13 +625,10 @@ async function checkSession() {
   }
 }
 async function loadDashboard() {
-  const response = await fetchApi("/api/dashboard", { credentials: "include", cache: "no-store" });
-  if (onMyDay && response.status === 403) {
-    window.dispatchEvent(new Event("myday:session-expired"));
-    throw new Error("session_expired");
-  }
-  if (!response.ok) throw new Error("data_unavailable");
-  const payload = await response.json();
+  const payload = await fetchApi("/api/dashboard", { credentials: "include", cache: "no-store" }, (response) => dashboardResponse(response, {
+    isProtected: onMyDay,
+    onSessionExpired: () => window.dispatchEvent(new Event("myday:session-expired"))
+  }));
   const { setDashboard: setDashboard2 } = await Promise.resolve().then(() => (init_data(), data_exports));
   setDashboard2(payload);
   loaded = true;
