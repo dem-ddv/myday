@@ -306,6 +306,7 @@
 .day-card-bar{margin-top:auto}
 .sleep-card .day-card-bar{background:#e8edf4}.sleep-card .day-card-bar i{background:#7893b4}
 .move-card .day-card-bar{background:#e7eee6}.move-card .day-card-bar i{background:#79a487}
+.move-card .step-bar{display:flex;flex-shrink:0}.move-card .step-bar i,.move-card .step-bar em{height:100%;display:block;flex-shrink:0}.move-card .step-bar em{background:repeating-linear-gradient(135deg,#a9c4ad 0 5px,#d4e4d4 5px 8px)}
 .burn-card .day-card-bar{background:#e7eee6}.burn-card .day-card-bar i{background:#7fa48a}
 .day-card-subtitle{font-size:11px;font-weight:500;color:#96a39c;margin-top:2px;line-height:1.2}
 .day-ai{max-width:940px;margin-top:21px;padding:22px 25px;border-radius:20px;background:#e9f0e8;border:1px solid #dfe9dd}
