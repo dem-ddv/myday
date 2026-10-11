@@ -1,4 +1,4 @@
-import { today, days, selectDay, minutesText, numberText } from './data.js?v=e52f69a147ee';
+import { today, days, selectDay, minutesText, numberText } from './data.js?v=931cb9d2d2d3';
 import { renderPeriods } from './period-view.js?v=bdc75e187339';
 import { liveWellnessPage, loadLiveWellness } from './live-sleep.js?v=d66495dd037c';
 import { authenticated, onMyDay } from './api-config.js?v=d34637085ebe';
@@ -10,6 +10,12 @@ const dateFromISO = iso => new Date(`${iso}T12:00:00Z`);
 const formatDate = (iso, options={ day:'numeric', month:'long', year:'numeric' }) => new Intl.DateTimeFormat('ru-RU', { timeZone:'UTC', ...options }).format(dateFromISO(iso)).replace(/\sг\.$/, '');
 const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 const goalBar = (value, goal, label) => Number.isFinite(value) ? `<span class="day-card-bar" role="progressbar" aria-valuenow="${Math.round(value)}" aria-valuemin="0" aria-valuemax="${goal}" aria-label="${label}"><i style="width:${Math.min(100,Math.max(0,value/goal*100))}%"></i></span>` : '';
+const stepGoalBar = (outside, total) => {
+  if (!Number.isFinite(outside) || !Number.isFinite(total) || total < outside) return '';
+  const basic = Math.min(100, outside / 10400 * 100);
+  const workout = Math.min(100-basic, (total-outside) / 10400 * 100);
+  return `<span class="day-card-bar step-bar" role="progressbar" aria-valuenow="${Math.round(total)}" aria-valuemin="0" aria-valuemax="10400" aria-label="Все шаги, включая тренировки: из 10 400"><i style="width:${basic}%"></i><em style="width:${workout}%"></em></span>`;
+};
 function moscowDate() { const parts=Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'Europe/Moscow', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date()).map(p=>[p.type,p.value])); return `${parts.year}-${parts.month}-${parts.day}`; }
 const overviewLabel = () => 'День';
 const updatedLabel = () => today.updatedAt ? `Данные обновлены ${new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(today.updatedAt))}` : 'Время обновления неизвестно';
@@ -54,7 +60,7 @@ function todayPage() {
     <section class="day-head"><div><h1>День</h1><div class="day-date">${formatDate(today.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}${isCurrent?'<span class="today-chip">Сегодня</span>':''}</div></div><div class="day-switch" aria-label="Выбор дня"><button type="button" data-day="${previous}" aria-label="Предыдущий день" ${previous<earliest?'disabled':''}>${icon('left',19)}</button><input id="day-picker" type="date" value="${today.date}" min="${earliest}" max="${today.calendarToday}" aria-label="Выбрать день"><button type="button" data-day="${next}" aria-label="Следующий день" ${next>today.calendarToday?'disabled':''}>${icon('chevron',19)}</button></div></section>
     <div class="day-grid" aria-label="Показатели за ${formatDate(today.date)}">
       <button class="day-card sleep-card" data-detail="sleep"><span class="day-card-icon blue">${icon('moon',22)}</span><span class="day-card-title">Сон</span><strong class="day-card-value">${Number.isFinite(today.sleep)?minutesText(today.sleep):'—'}</strong>${goalBar(today.sleep,450,'Сон: из 7 часов 30 минут')}</button>
-      <button class="day-card move-card" data-detail="movement"><span class="day-card-icon sage">${icon('walk',23)}</span><span class="day-card-title">Шаги</span><span class="day-card-subtitle">вне тренировок</span><strong class="day-card-value">${Number.isFinite(today.steps)?numberText(today.steps):'—'}</strong>${goalBar(today.steps,10400,'Шаги вне тренировок: из 10 400')}</button>
+      <button class="day-card move-card" data-detail="movement"><span class="day-card-icon sage">${icon('walk',23)}</span><span class="day-card-title">Шаги</span><span class="day-card-subtitle">вне тренировок</span><strong class="day-card-value">${Number.isFinite(today.steps)?numberText(today.steps):'—'}</strong>${stepGoalBar(today.steps,today.stepsTotal)}</button>
       <button class="day-card food-card" data-detail="nutrition"><span class="day-card-icon coral">${icon('food',22)}</span><span class="day-card-title">Съедено</span><strong class="day-card-value">${calories===null?'—':numberText(calories)} <small>ккал</small></strong>${goalBar(calories,2300,'Съедено: из 2300 ккал')}</button>
       <button class="day-card burn-card" data-detail="energy"><span class="day-card-icon green">${icon('sun',22)}</span><span class="day-card-title">Потрачено</span><strong class="day-card-value">${energy?`≈ ${numberText(energy.total)} <small>ккал</small>`:'—'}</strong>${goalBar(energy?.total,2000,'Потрачено: из 2000 ккал')}</button>
     </div>
@@ -68,7 +74,7 @@ function periodsPage() { return renderPeriods(state, icon); }
 function detailContent(name) {
   const blocks = {
     sleep: { title:'Сон',symbol:'moon',tone:'blue',value:minutesText(today.sleep),description:'Ночной сон по записи Garmin.',rows:[['Вариабельность пульса',today.hrv == null ? 'Нет записи' : `${numberText(today.hrv)} мс`],['Пульс покоя',today.restingPulse == null ? 'Нет записи' : `${numberText(today.restingPulse)} уд/мин`]],source:'Garmin через Intervals.icu' },
-    movement: { title:'Шаги',symbol:'walk',tone:'sage',value:numberText(today.steps),description:'Показаны шаги вне тренировок. Полоса сравнивает их с ориентиром 10 400 шагов за день; шаги на тренировках могут дополнять результат.',rows:[],source:'Garmin через Intervals.icu' },
+    movement: { title:'Шаги',symbol:'walk',tone:'sage',value:numberText(today.steps),description:'Число на карточке — шаги вне тренировок. Полоса складывает их с шагами на тренировках до общего ориентира 10 400: светлая часть обозначает тренировки.',rows:Number.isFinite(today.stepsTotal)?[['Всего за день',numberText(today.stepsTotal)],['На тренировках',Number.isFinite(today.steps)?numberText(today.stepsTotal-today.steps):'Нет оценки']]:[],source:'Garmin через Intervals.icu' },
     nutrition: { title:'Съедено',symbol:'food',tone:'coral',value:today.nutrition ? `${numberText(today.nutrition.calories)} ккал` : 'Нет записи',description:'Ориентир — 2300 ккал в день. Показаны только внесённые продукты; полнота дневника неизвестна.',rows:today.nutrition ? [['Белки',`${numberText(today.nutrition.protein)} г`],['Жиры',`${numberText(today.nutrition.fat)} г`],['Углеводы',`${numberText(today.nutrition.carbs)} г`],['Записей',numberText(today.nutrition.entries)]] : [],source:'FatSecret' },
     energy: { title:'Оценка расхода',symbol:'info',tone:'sage',value:today.energy ? `≈ ${numberText(today.energy.total)} ккал` : 'Нет оценки',description:`${today.date===today.calendarToday?'Оценка к текущему моменту дня.':'Оценка за завершённый день.'} Ориентир — 2000 ккал.`,rows:today.energy ? [['Основной обмен',`${numberText(today.energy.resting)} ккал`],['Фоновая активность',`${numberText(today.energy.background)} ккал`],['Тренировки',`${numberText(today.energy.workout)} ккал`],['Ходьба',`${numberText(today.energy.walking)} ккал`]] : [],source:'Расчёт по Garmin и Withings' },
   };

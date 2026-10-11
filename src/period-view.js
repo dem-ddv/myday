@@ -1,4 +1,4 @@
-import { today, days, numberText } from './data.js?v=e52f69a147ee';
+import { today, days, numberText } from './data.js?v=931cb9d2d2d3';
 import { periodBuckets, mean, macroMean, lastWeight, record } from './period-model.js?v=88b7a5a9d64a';
 
 const dateText=(key,options={day:'numeric',month:'short'})=>new Intl.DateTimeFormat('ru-RU',{timeZone:'UTC',...options}).format(new Date(`${key}T12:00:00Z`));

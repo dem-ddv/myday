@@ -1,4 +1,4 @@
-import { today, days, average } from './data.js?v=e52f69a147ee';
+import { today, days, average } from './data.js?v=931cb9d2d2d3';
 
 const DAY = 86400000;
 const iso = date => date.toISOString().slice(0,10);
