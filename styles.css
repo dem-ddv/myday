@@ -276,3 +276,69 @@
 @media(max-width:800px){.period-controls{display:block;margin:20px 0 15px}.period-asof{display:block;text-align:right;margin-top:7px;font-size:11px}}
 @media(max-width:380px){.history-comparison{align-items:flex-start;flex-direction:column;gap:8px}.history-pair{font-size:25px}.history-delta{align-self:flex-end}}
 @media(max-width:800px){.today-page .hero-art{display:none}}
+
+/* Compact daily overview. The four primary measures share one visual system. */
+.today-page .content-shell{max-width:1240px;padding-top:40px}
+.day-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:28px}
+.day-head h1{font-size:clamp(42px,4vw,58px);line-height:1;margin:0 0 10px}
+.day-date{display:flex;align-items:center;gap:10px;color:#667675;font-size:15px;font-weight:650}
+.today-chip{background:#e7efe8;color:#37674c;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800;text-transform:none}
+.day-switch{display:flex;align-items:center;gap:7px}
+.day-switch button,.day-switch input{height:40px;border:1px solid #e3e8e1;border-radius:11px;background:#fffefa;color:#315344}
+.day-switch button{width:40px;display:grid;place-items:center;padding:0}
+.day-switch input{width:145px;padding:0 10px;font:700 13px Manrope,sans-serif;color:#263e43;color-scheme:light}
+.day-switch button:focus-visible,.day-switch input:focus-visible,.day-card:focus-visible{outline:2px solid #357452;outline-offset:3px}
+.day-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.day-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:230px;border:1px solid #e8e9e2;border-radius:22px;padding:20px;text-align:left;background:#fffdfa;box-shadow:0 8px 28px #2933290a;transition:transform .15s,box-shadow .15s}
+.day-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #29332917}
+.day-card-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;margin-bottom:20px}
+.day-card-icon.blue{color:#35557c;background:#e8edf4}
+.day-card-icon.sage{color:#476f58;background:#e8f0e7}
+.day-card-icon.coral{color:#b85e4a;background:#f9e8df}
+.day-card-icon.green{color:#4c775e;background:#e7eee6}
+.day-card-title{font-family:'Playfair Display',Georgia,serif;font-size:21px;font-weight:700;line-height:1.15;color:#1b2d3d}
+.day-card-value{display:block;max-width:100%;font-family:'Playfair Display',Georgia,serif;font-size:clamp(29px,2.8vw,39px);font-weight:700;letter-spacing:-.04em;line-height:1.15;color:#102b36;white-space:nowrap;margin-top:8px}
+.day-card-value small{font:700 13px Manrope,sans-serif;letter-spacing:0;color:#73817c}
+.day-card-note{font-size:12px;line-height:1.4;font-weight:650;color:#677875;margin-top:auto;padding-top:12px}
+.day-card-bar{display:block;width:100%;height:5px;border-radius:9px;background:#f0e9e2;margin-top:10px;overflow:hidden}
+.day-card-bar i{display:block;height:100%;background:#d58c70;border-radius:inherit}
+.day-meta{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:19px 2px 0;color:#89938f;font-size:11px;font-weight:650}
+.day-meta span:last-child{text-align:right}
+.periods-page .period-hero{min-height:0;padding:38px 0 8px}
+.periods-page .period-hero h1{font-size:clamp(42px,4vw,58px)}
+.periods-page .period-controls{margin:5px 0 19px}
+.periods-page .trend-card{padding-bottom:20px}
+.history-chart{margin-top:22px}
+.history-comparison{padding-top:12px}
+.history-change-label{font-size:12px;font-weight:650;color:#70817f;line-height:1.35}
+.history-delta{font-size:13px}
+.history-x.week span{font-size:10px}
+@media(max-width:1000px){.day-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.day-card{min-height:195px}.day-card-icon{margin-bottom:12px}}
+@media(max-width:800px){
+  .today-page .content-shell{padding:29px 17px 115px}
+  .day-head{align-items:flex-start;flex-direction:column;gap:17px;margin-bottom:18px}
+  .day-head h1{font-size:44px;margin-bottom:6px}
+  .day-date{font-size:13px;flex-wrap:wrap;gap:6px}
+  .day-switch{width:100%;justify-content:space-between}
+  .day-switch input{flex:1;max-width:220px;text-align:center}
+  .day-grid{gap:10px}
+  .day-card{min-height:182px;padding:15px;border-radius:18px}
+  .day-card-icon{width:34px;height:34px;border-radius:11px;margin-bottom:12px}
+  .day-card-icon svg{width:20px;height:20px}
+  .day-card-title{font-size:18px}
+  .day-card-value{font-size:clamp(23px,7vw,31px);margin-top:6px}
+  .day-card-value small{font-size:11px}
+  .day-card-note{font-size:10px;line-height:1.35;padding-top:8px}
+  .day-meta{font-size:10px;line-height:1.4;align-items:flex-start;flex-direction:column;gap:4px;margin-top:17px}
+  .day-meta span:last-child{text-align:left}
+  .periods-page .content-shell{padding-inline:17px}
+  .periods-page .period-hero{padding:28px 0 4px}
+  .periods-page .period-hero h1{font-size:44px}
+  .periods-page .period-controls{margin:8px 0 16px}
+  .periods-page .period-mode{width:100%;gap:1px;padding:4px}
+  .periods-page .period-mode button{padding:8px 3px;font-size:11px;line-height:1.2;white-space:nowrap}
+  .period-asof{margin-top:8px}
+  .history-x.week span{font-size:9px}
+  .history-comparison{flex-direction:row;align-items:center}
+}
+@media(max-width:360px){.day-card{padding:12px}.day-card-value{font-size:22px}.periods-page .period-mode button{font-size:10px}.history-x.week span{font-size:8px}}
