@@ -233,6 +233,7 @@
 .history-missing:focus-visible{outline:2px solid #345f4a;outline-offset:2px;border-radius:4px}
 .history-line{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .history-line polyline{fill:none;stroke:#7798a3;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.history-line.weight-line polyline{stroke:#81a0a7;stroke-width:1.7;stroke-dasharray:4 5;opacity:.8}
 .history-point{position:absolute;left:var(--x);top:var(--y);width:30px;height:30px;border:0;border-radius:50%;background:transparent;transform:translate(-50%,-50%);padding:0;z-index:1}
 .history-point::before{content:'';position:absolute;left:50%;top:50%;width:11px;height:11px;transform:translate(-50%,-50%);border:1.5px solid #fff;border-radius:50%;background:#93adb6;box-shadow:0 0 0 1px #628593}
 .history-point.current::before{background:#779f8a;box-shadow:0 0 0 1px #557e69}
@@ -302,6 +303,14 @@
 .day-card-note{font-size:12px;line-height:1.4;font-weight:650;color:#677875;margin-top:auto;padding-top:12px}
 .day-card-bar{display:block;width:100%;height:5px;border-radius:9px;background:#f0e9e2;margin-top:10px;overflow:hidden}
 .day-card-bar i{display:block;height:100%;background:#d58c70;border-radius:inherit}
+.day-card-bar{margin-top:auto}
+.sleep-card .day-card-bar{background:#e8edf4}.sleep-card .day-card-bar i{background:#7893b4}
+.move-card .day-card-bar{background:#e7eee6}.move-card .day-card-bar i{background:#79a487}
+.burn-card .day-card-bar{background:#e7eee6}.burn-card .day-card-bar i{background:#7fa48a}
+.day-card-subtitle{font-size:11px;font-weight:500;color:#96a39c;margin-top:2px;line-height:1.2}
+.day-ai{max-width:940px;margin-top:21px;padding:22px 25px;border-radius:20px;background:#e9f0e8;border:1px solid #dfe9dd}
+.day-ai-label{font-size:11px;color:#62816e;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.day-ai p{font-size:14px;line-height:1.7;color:#344e42;margin:8px 0 0;white-space:pre-line}
 .day-meta{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:19px 2px 0;color:#89938f;font-size:11px;font-weight:650}
 .day-meta span:last-child{text-align:right}
 .periods-page .period-hero{min-height:0;padding:38px 0 8px}
