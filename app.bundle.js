@@ -299,62 +299,6 @@ var init_period_view = __esm({
   }
 });
 
-// dashboard/dist/src/live-sleep.js?v=d66495dd037c
-function liveWellnessPage() {
-  const today2 = moscowDate2();
-  return `<main class="page live-sleep-page"><div class="content-shell"><section class="live-sleep-hero"><div class="eyebrow">\u041B\u0418\u0427\u041D\u042B\u0415 \u0414\u0410\u041D\u041D\u042B\u0415</div><h1>\u041C\u043E\u0438 \u0434\u0430\u043D\u043D\u044B\u0435</h1><p>\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438 Garmin \u0437\u0430 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0439 \u0434\u0435\u043D\u044C</p></section><section class="live-sleep-card"><label for="sleep-date">\u0414\u0430\u0442\u0430 \u0437\u0430\u043F\u0438\u0441\u0438</label><input id="sleep-date" type="date" max="${today2}" value="${previousDate(today2)}" /><p id="live-wellness-status" class="live-sleep-state" role="status" aria-live="polite">\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C \u0437\u0430\u043F\u0438\u0441\u0438\u2026</p><div class="live-wellness-grid" aria-busy="true">${metrics.map((metric) => `<div class="live-wellness-metric" data-metric="${metric.key}"><span class="live-wellness-label">${metric.label}</span><strong class="live-wellness-value">\u2014</strong><span class="live-wellness-unit">${metric.unit}</span></div>`).join("")}</div><p class="live-sleep-source">\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A: Garmin \u0447\u0435\u0440\u0435\u0437 Intervals.icu. \u041F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u043F\u043E\u043A\u0430\u0437\u0430\u043D \u0432\u0447\u0435\u0440\u0430\u0448\u043D\u0438\u0439 \u0437\u0430\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0439 \u0434\u0435\u043D\u044C; \u043C\u043E\u0436\u043D\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u0435\u0433\u043E\u0434\u043D\u044F. \u041F\u0440\u043E\u043F\u0443\u0441\u043A \u043E\u0437\u043D\u0430\u0447\u0430\u0435\u0442, \u0447\u0442\u043E \u0437\u0430\u043F\u0438\u0441\u044C \u043D\u0435 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0430.</p></section><p class="live-sleep-note">\xAB\u0414\u0435\u043D\u044C\xBB \u0438 \xAB\u041F\u0435\u0440\u0438\u043E\u0434\u044B\xBB \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u044E\u0442 \u0441\u043E\u0445\u0440\u0430\u043D\u0451\u043D\u043D\u044B\u0435 \u043B\u0438\u0447\u043D\u044B\u0435 \u0437\u0430\u043F\u0438\u0441\u0438.</p></div></main>`;
-}
-async function loadLiveWellness(date2) {
-  currentRequest?.abort();
-  const controller = new AbortController();
-  currentRequest = controller;
-  const status = document.querySelector("#live-wellness-status");
-  const grid = document.querySelector(".live-wellness-grid");
-  if (!status || !grid) return;
-  status.textContent = "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C \u0437\u0430\u043F\u0438\u0441\u0438\u2026";
-  grid.setAttribute("aria-busy", "true");
-  for (const metric of metrics) grid.querySelector(`[data-metric="${metric.key}"] .live-wellness-value`).textContent = "\u2014";
-  try {
-    const response = await fetch(`${apiBase}/api/wellness?date=${encodeURIComponent(date2)}`, { credentials: "include", cache: "no-store", signal: controller.signal });
-    if (onMyDay && response.status === 403) {
-      window.dispatchEvent(new Event("myday:session-expired"));
-      return;
-    }
-    if (!response.ok) throw new Error(response.status === 403 ? "access_denied" : "source_unavailable");
-    const data = await response.json();
-    if (controller !== currentRequest || !grid.isConnected) return;
-    for (const metric of metrics) {
-      const value = data[metric.key];
-      grid.querySelector(`[data-metric="${metric.key}"] .live-wellness-value`).textContent = Number.isFinite(value) ? metric.format(value) : "\u041D\u0435\u0442 \u0437\u0430\u043F\u0438\u0441\u0438";
-    }
-    status.textContent = data.state === "missing" ? `\u0417\u0430 ${dateText2(data.date)} \u0437\u0430\u043F\u0438\u0441\u0435\u0439 \u043D\u0435\u0442` : `\u0414\u0430\u043D\u043D\u044B\u0435 \u0437\u0430 ${dateText2(data.date)}${date2 === moscowDate2() ? " \xB7 \u0434\u0435\u043D\u044C \u0435\u0449\u0451 \u0438\u0434\u0451\u0442" : ""}`;
-  } catch (error) {
-    if (error.name === "AbortError" || controller !== currentRequest || !grid.isConnected) return;
-    status.textContent = error.message === "access_denied" ? "\u0412\u0445\u043E\u0434 \u043D\u0435 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0451\u043D. \u041E\u0431\u043D\u043E\u0432\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438 \u0432\u043E\u0439\u0434\u0438 \u0441\u043D\u043E\u0432\u0430." : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0434\u0430\u043D\u043D\u044B\u0435. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0435\u0449\u0451 \u0440\u0430\u0437 \u043F\u043E\u0437\u0436\u0435.";
-  } finally {
-    if (controller === currentRequest && grid.isConnected) grid.setAttribute("aria-busy", "false");
-  }
-}
-var dateText2, moscowDate2, previousDate, currentRequest, metrics;
-var init_live_sleep = __esm({
-  "dashboard/dist/src/live-sleep.js?v=d66495dd037c"() {
-    "use strict";
-    init_api_config();
-    dateText2 = (iso2) => new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(/* @__PURE__ */ new Date(`${iso2}T12:00:00Z`)).replace(/\sг\.$/, "");
-    moscowDate2 = () => {
-      const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Moscow", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(/* @__PURE__ */ new Date()).map((p) => [p.type, p.value]));
-      return `${parts.year}-${parts.month}-${parts.day}`;
-    };
-    previousDate = (iso2) => new Date(Date.parse(`${iso2}T00:00:00Z`) - 864e5).toISOString().slice(0, 10);
-    metrics = [
-      { key: "sleepMinutes", label: "\u0421\u043E\u043D", unit: "\u0447:\u043C\u0438\u043D", format: (value) => `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}` },
-      { key: "steps", label: "\u0428\u0430\u0433\u0438", unit: "\u0437\u0430 \u0434\u0435\u043D\u044C", format: (value) => Math.round(value).toLocaleString("ru-RU") },
-      { key: "hrvMs", label: "\u0412\u0430\u0440\u0438\u0430\u0431\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C \u043F\u0443\u043B\u044C\u0441\u0430", unit: "\u043C\u0441 \xB7 rMSSD", format: (value) => Math.round(value).toLocaleString("ru-RU") },
-      { key: "restingPulse", label: "\u041F\u0443\u043B\u044C\u0441 \u043F\u043E\u043A\u043E\u044F", unit: "\u0443\u0434/\u043C\u0438\u043D", format: (value) => Math.round(value).toLocaleString("ru-RU") }
-    ];
-  }
-});
-
 // dashboard/dist/src/insight-view.js?v=22f6fa7374a5
 function dayInsight(day) {
   const insight = day?.insight;
@@ -393,7 +337,7 @@ var init_insight_view = __esm({
   }
 });
 
-// dashboard/dist/src/app.js?v=c0040dce8315
+// dashboard/dist/src/app.js?v=aa88879716d8
 var app_exports = {};
 __export(app_exports, {
   render: () => render
@@ -402,10 +346,10 @@ function navItem(page, label, symbol) {
   return `<button class="nav-item ${state.page === page ? "active" : ""}" data-page="${page}" aria-current="${state.page === page ? "page" : "false"}">${icon(symbol, 22)}<span>${label}</span></button>`;
 }
 function header() {
-  return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#sleep"><span class="brand-leaf">\u2726</span><span>\u043C\u043E\u0439 \u0434\u0435\u043D\u044C</span></a><nav class="desktop-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("sleep", "\u041C\u043E\u0438 \u0434\u0430\u043D\u043D\u044B\u0435", "moon")}${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav></div></header>`;
+  return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#today"><span class="brand-leaf">\u2726</span><span>\u043C\u043E\u0439 \u0434\u0435\u043D\u044C</span></a><nav class="desktop-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav></div></header>`;
 }
 function bottomNav() {
-  return `<nav class="bottom-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("sleep", "\u041C\u043E\u0438 \u0434\u0430\u043D\u043D\u044B\u0435", "moon")}${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav>`;
+  return `<nav class="bottom-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav>`;
 }
 function todayPage() {
   const nutrition = today.nutrition;
@@ -445,11 +389,10 @@ function detailContent(name) {
 }
 function render() {
   if (!authenticated) return;
-  app.innerHTML = `${header()}${state.page === "periods" ? periodsPage() : state.page === "sleep" ? liveWellnessPage() : todayPage()}${bottomNav()}${state.detail ? detailContent(state.detail) : ""}`;
+  app.innerHTML = `${header()}${state.page === "periods" ? periodsPage() : todayPage()}${bottomNav()}${state.detail ? detailContent(state.detail) : ""}`;
   document.body.classList.toggle("modal-open", !!state.detail);
   for (const element of app.querySelectorAll(".topbar, main, .bottom-nav")) element.toggleAttribute("inert", !!state.detail);
   if (state.detail) app.querySelector(".modal-close")?.focus();
-  if (state.page === "sleep") loadLiveWellness(app.querySelector("#sleep-date").value);
 }
 function closeDetail() {
   const returnTo = detailReturn;
@@ -459,15 +402,15 @@ function closeDetail() {
 }
 var app, state, detailReturn, dateFromISO, formatDate, goalBar, stepGoalBar, overviewLabel, updatedLabel, icon;
 var init_app = __esm({
-  "dashboard/dist/src/app.js?v=c0040dce8315"() {
+  "dashboard/dist/src/app.js?v=aa88879716d8"() {
     "use strict";
     init_data();
     init_period_view();
-    init_live_sleep();
     init_api_config();
     init_insight_view();
     app = document.querySelector("#app");
-    state = { page: ["today", "periods", "sleep"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "today", mode: "week", detail: null };
+    state = { page: ["today", "periods"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "today", mode: "week", detail: null };
+    if (location.hash === "#sleep") history.replaceState(null, "", "#today");
     detailReturn = null;
     dateFromISO = (iso2) => /* @__PURE__ */ new Date(`${iso2}T12:00:00Z`);
     formatDate = (iso2, options = { day: "numeric", month: "long", year: "numeric" }) => new Intl.DateTimeFormat("ru-RU", { timeZone: "UTC", ...options }).format(dateFromISO(iso2)).replace(/\sг\.$/, "");
@@ -538,12 +481,11 @@ var init_app = __esm({
       }
     });
     app.addEventListener("change", (e) => {
-      if (e.target.id === "sleep-date") loadLiveWellness(e.target.value);
       if (e.target.id === "day-picker" && selectDay(e.target.value)) render();
     });
     window.addEventListener("hashchange", () => {
-      const page = location.hash.slice(1);
-      if (["today", "periods", "sleep"].includes(page) && page !== state.page) {
+      const page = location.hash.slice(1) === "periods" ? "periods" : "today";
+      if (["today", "periods"].includes(page) && page !== state.page) {
         state.page = page;
         state.detail = null;
         render();
