@@ -130,7 +130,7 @@ var init_period_model = __esm({
   }
 });
 
-// dashboard/dist/src/period-view.js?v=bdc75e187339
+// dashboard/dist/src/period-view.js?v=fb15cc1371f3
 function difference(metric, oldValue, newValue) {
   if (oldValue === null || newValue === null) return "\u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0434\u0430\u043D\u043D\u044B\u0445";
   if (metric === "sleep") {
@@ -272,11 +272,11 @@ function card(buckets, mode, metric, symbol, tone, icon2) {
 function renderPeriods(state2, icon2) {
   const buckets = periodBuckets(state2.mode, 10);
   const modes = { day: "\u041F\u043E \u0434\u043D\u044F\u043C", week: "\u041F\u043E \u043D\u0435\u0434\u0435\u043B\u044F\u043C", month: "\u041F\u043E \u043C\u0435\u0441\u044F\u0446\u0430\u043C", year: "\u041F\u043E \u0433\u043E\u0434\u0430\u043C" };
-  return `<main class="page periods-page"><div class="content-shell"><section class="period-hero"><div><h1>\u041F\u0435\u0440\u0438\u043E\u0434\u044B</h1></div></section><div class="period-controls"><div class="period-mode" role="group" aria-label="\u041C\u0430\u0441\u0448\u0442\u0430\u0431 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u044F">${Object.entries(modes).map(([key, name]) => `<button data-mode="${key}" class="${state2.mode === key ? "selected" : ""}" aria-pressed="${state2.mode === key}">${name}</button>`).join("")}</div><span class="period-asof">\u041D\u0430 ${dateText(today.calendarToday, { day: "numeric", month: "long", year: "numeric" })}</span></div><div class="period-card-grid">${card(buckets, state2.mode, "sleep", "moon", "blue", icon2)}${card(buckets, state2.mode, "steps", "walk", "sage", icon2)}${card(buckets, state2.mode, "nutrition", "food", "coral", icon2)}${card(buckets, state2.mode, "weight", "weight", "lavender", icon2)}</div><details class="period-method compact-method"><summary>\u041A\u0430\u043A \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F</summary><p>\u0421\u043E\u043D \u0438 \u0448\u0430\u0433\u0438 \u2014 \u0441\u0440\u0435\u0434\u043D\u0435\u0435 \u043F\u043E \u0434\u043D\u044F\u043C \u0441 \u0434\u0430\u043D\u043D\u044B\u043C\u0438, \u043F\u0438\u0442\u0430\u043D\u0438\u0435 \u2014 \u043F\u043E \u0434\u043D\u044F\u043C \u0441 \u0437\u0430\u043F\u0438\u0441\u044F\u043C\u0438. \u0428\u0430\u0433\u0438 \u0437\u0434\u0435\u0441\u044C \u0431\u0435\u0437 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043E\u043A. \u0412\u0435\u0441 \u2014 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0437\u0430\u043C\u0435\u0440 \u0432 \u043F\u0435\u0440\u0438\u043E\u0434\u0435. \u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0441\u0440\u0430\u0432\u043D\u0438\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u044B\u0435 \u0438 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043D\u0430 \u0433\u0440\u0430\u0444\u0438\u043A\u0435. \u041F\u0440\u043E\u043F\u0443\u0441\u043A\u0438 \u043D\u0435 \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u043D\u0443\u043B\u0451\u043C. \u041F\u0443\u043D\u043A\u0442\u0438\u0440 \u0438 \u0448\u0442\u0440\u0438\u0445\u043E\u0432\u043A\u0430 \u043E\u0442\u043C\u0435\u0447\u0430\u044E\u0442 \u043D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0439 \u0438\u043D\u0442\u0435\u0440\u0432\u0430\u043B. \u0412 \u0440\u0435\u0436\u0438\u043C\u0435 \xAB\u041F\u043E \u0434\u043D\u044F\u043C\xBB \u043A\u043E\u0441\u043D\u0438\u0441\u044C \u0442\u043E\u0447\u043A\u0438 \u0438\u043B\u0438 \u0441\u0442\u043E\u043B\u0431\u0446\u0430, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C \u044D\u0442\u043E\u0442 \u0434\u0435\u043D\u044C.</p></details></div></main>`;
+  return `<main class="page periods-page"><div class="content-shell"><section class="period-hero"><div><h1>\u0414\u0438\u043D\u0430\u043C\u0438\u043A\u0430</h1></div></section><div class="period-controls"><div class="period-mode" role="group" aria-label="\u041C\u0430\u0441\u0448\u0442\u0430\u0431 \u0441\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u044F">${Object.entries(modes).map(([key, name]) => `<button data-mode="${key}" class="${state2.mode === key ? "selected" : ""}" aria-pressed="${state2.mode === key}">${name}</button>`).join("")}</div><span class="period-asof">\u041D\u0430 ${dateText(today.calendarToday, { day: "numeric", month: "long", year: "numeric" })}</span></div><div class="period-card-grid">${card(buckets, state2.mode, "sleep", "moon", "blue", icon2)}${card(buckets, state2.mode, "steps", "walk", "sage", icon2)}${card(buckets, state2.mode, "nutrition", "food", "coral", icon2)}${card(buckets, state2.mode, "weight", "weight", "lavender", icon2)}</div><details class="period-method compact-method"><summary>\u041A\u0430\u043A \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F</summary><p>\u0421\u043E\u043D \u0438 \u0448\u0430\u0433\u0438 \u2014 \u0441\u0440\u0435\u0434\u043D\u0435\u0435 \u043F\u043E \u0434\u043D\u044F\u043C \u0441 \u0434\u0430\u043D\u043D\u044B\u043C\u0438, \u043F\u0438\u0442\u0430\u043D\u0438\u0435 \u2014 \u043F\u043E \u0434\u043D\u044F\u043C \u0441 \u0437\u0430\u043F\u0438\u0441\u044F\u043C\u0438. \u0428\u0430\u0433\u0438 \u0437\u0434\u0435\u0441\u044C \u0431\u0435\u0437 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043E\u043A. \u0412\u0435\u0441 \u2014 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0437\u0430\u043C\u0435\u0440 \u0432 \u043F\u0435\u0440\u0438\u043E\u0434\u0435. \u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0441\u0440\u0430\u0432\u043D\u0438\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u044B\u0435 \u0438 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043D\u0430 \u0433\u0440\u0430\u0444\u0438\u043A\u0435. \u041F\u0440\u043E\u043F\u0443\u0441\u043A\u0438 \u043D\u0435 \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u043D\u0443\u043B\u0451\u043C. \u041F\u0443\u043D\u043A\u0442\u0438\u0440 \u0438 \u0448\u0442\u0440\u0438\u0445\u043E\u0432\u043A\u0430 \u043E\u0442\u043C\u0435\u0447\u0430\u044E\u0442 \u043D\u0435\u0437\u0430\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0439 \u0438\u043D\u0442\u0435\u0440\u0432\u0430\u043B. \u0412 \u0440\u0435\u0436\u0438\u043C\u0435 \xAB\u041F\u043E \u0434\u043D\u044F\u043C\xBB \u043A\u043E\u0441\u043D\u0438\u0441\u044C \u0442\u043E\u0447\u043A\u0438 \u0438\u043B\u0438 \u0441\u0442\u043E\u043B\u0431\u0446\u0430, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C \u044D\u0442\u043E\u0442 \u0434\u0435\u043D\u044C.</p></details></div></main>`;
 }
 var dateText, number, time, valueText, metricName, unitName, metricKind, stepUnit, signed, shortDate;
 var init_period_view = __esm({
-  "dashboard/dist/src/period-view.js?v=bdc75e187339"() {
+  "dashboard/dist/src/period-view.js?v=fb15cc1371f3"() {
     "use strict";
     init_data();
     init_period_model();
@@ -337,7 +337,7 @@ var init_insight_view = __esm({
   }
 });
 
-// dashboard/dist/src/app.js?v=aa88879716d8
+// dashboard/dist/src/app.js?v=99b3dd7d743b
 var app_exports = {};
 __export(app_exports, {
   render: () => render
@@ -346,10 +346,10 @@ function navItem(page, label, symbol) {
   return `<button class="nav-item ${state.page === page ? "active" : ""}" data-page="${page}" aria-current="${state.page === page ? "page" : "false"}">${icon(symbol, 22)}<span>${label}</span></button>`;
 }
 function header() {
-  return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#today"><span class="brand-leaf">\u2726</span><span>\u043C\u043E\u0439 \u0434\u0435\u043D\u044C</span></a><nav class="desktop-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav></div></header>`;
+  return `<header class="topbar"><div class="topbar-inner"><a class="brand" href="#today"><span class="brand-leaf">\u2726</span><span>\u043C\u043E\u0439 \u0434\u0435\u043D\u044C</span></a><nav class="desktop-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u0414\u0438\u043D\u0430\u043C\u0438\u043A\u0430", "trend")}</nav></div></header>`;
 }
 function bottomNav() {
-  return `<nav class="bottom-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u041F\u0435\u0440\u0438\u043E\u0434\u044B", "calendar")}</nav>`;
+  return `<nav class="bottom-nav" aria-label="\u041E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F">${navItem("today", overviewLabel(), "home")}${navItem("periods", "\u0414\u0438\u043D\u0430\u043C\u0438\u043A\u0430", "trend")}</nav>`;
 }
 function todayPage() {
   const nutrition = today.nutrition;
@@ -402,7 +402,7 @@ function closeDetail() {
 }
 var app, state, detailReturn, dateFromISO, formatDate, goalBar, stepGoalBar, overviewLabel, updatedLabel, icon;
 var init_app = __esm({
-  "dashboard/dist/src/app.js?v=aa88879716d8"() {
+  "dashboard/dist/src/app.js?v=99b3dd7d743b"() {
     "use strict";
     init_data();
     init_period_view();
@@ -427,6 +427,7 @@ var init_app = __esm({
       const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
       const paths = {
         home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+        trend: '<path d="M3 3v18h18M6 15l4-5 4 3 6-7"/>',
         calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',
         layers: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
         moon: '<path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.6 8.6 0 1 0 20.5 14.1Z" fill="currentColor" stroke="none"/>',
